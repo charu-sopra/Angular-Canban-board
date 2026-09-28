@@ -1,0 +1,58 @@
+@use '../../variables' as *;
+#header {
+  background-color: #fff;
+  box-shadow: 0 10px 20px #dad2e5;
+
+  padding: 0;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+
+  z-index: 2001;
+
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+/* Purple strip */
+
+.header__secondary-menu {
+  height: 5px;
+  background: #5f2d91;
+ background: $brand-gradient;
+
+}
+
+
+/* Main header */
+
+.header__primary-menu {
+  height: 55px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 30px;
+
+  box-sizing: border-box;
+}
+
+
+/* Logo */
+
+.primary-menu__logo {
+  display: flex;
+  align-items: center;
+
+  text-decoration: none;
+}
+
+.primary-menu__logo img {
+  width: 150px;
+  height: auto;
+  display: block;
+}
+

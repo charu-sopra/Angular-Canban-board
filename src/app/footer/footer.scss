@@ -1,0 +1,36 @@
+#footer {
+  background: #f2eff6;
+}
+
+.footer__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer__top-content {
+  padding: 40px 32px;
+}
+
+.footer__logo {
+  width: 100%;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.footer__logo img {
+  display: block;
+  max-width: 192px;
+  margin: 0 auto;
+}
+
+.footer__logo p {
+  margin: 16px 0 0;
+  text-align: center;
+  line-height: 1.9rem;
+  font-size: 14px;
+}
+
+.footer__secondary-nav {
+  text-align: center;
+}

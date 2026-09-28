@@ -1,0 +1,882 @@
+
+<form [formGroup]="signUpForm" class="my-form">
+
+    <mat-stepper #stepper>
+        <mat-step errorMessage="Personal details are required.">
+
+            <ng-template matStepLabel>
+                Personal Information
+            </ng-template>
+            <h3 style="margin-bottom: 25px;">Create User</h3>
+
+
+            <!-- Employee ID -->
+
+            <mat-form-field appearance="outline" class="input-container">
+
+                <mat-label>
+                    Employee ID
+                </mat-label>
+
+                <input
+                    matInput
+                    type="number"
+                    formControlName="employeeId">
+
+            </mat-form-field>
+
+            @if (employeeId.invalid && employeeId.touched) {
+
+                <mat-error>
+                    Employee ID is required.
+                </mat-error>
+
+            }
+
+            <!-- First Name -->
+
+            <mat-form-field appearance="outline" class="input-container">
+
+                <mat-label>
+                    First Name
+                </mat-label>
+
+                <input
+                    matInput
+                    formControlName="firstName">
+
+            </mat-form-field>
+
+            @if (firstName.invalid && firstName.touched) {
+
+                <mat-error>
+                    First name is required.
+                </mat-error>
+
+            }
+
+            <!-- Middle Name -->
+
+            <mat-form-field appearance="outline" class="input-container">
+                <mat-label>
+                    Middle Name
+                </mat-label>
+
+                <input matInput formControlName="middleName">
+            </mat-form-field>
+
+
+            <!-- Last Name -->
+
+            <mat-form-field appearance="outline" class="input-container">
+                <mat-label>
+                    Last Name
+                </mat-label>
+
+                <input matInput formControlName="lastName">
+
+            </mat-form-field>
+
+            @if (lastName.invalid && lastName.touched) {
+
+                <mat-error>
+                    Last name is required.
+                </mat-error>
+
+            }
+
+            <!-- STEP 1 BUTTON -->
+
+            <div class="step-buttons">
+
+                <button  matButton matStepperNext type="button">
+                    Next
+                </button>
+            </div>
+        </mat-step>
+
+        <mat-step errorMessage="Contact and Role details are required.">
+
+            <ng-template matStepLabel>
+                Contact & Role
+            </ng-template>
+
+
+            <!-- Phone Number -->
+
+            <mat-form-field appearance="outline" class="input-container">
+
+                <mat-label>
+                    Phone Number
+                </mat-label>
+
+                <input
+                    matInput
+                    type="tel"
+                    formControlName="phoneNo">
+
+            </mat-form-field>
+
+            @if (phoneNo.invalid && phoneNo.touched) {
+
+                <mat-error>
+                    Please enter a valid 10-digit phone number.
+                </mat-error>
+
+            }
+
+
+            <!-- Official Work Email -->
+
+            <mat-form-field appearance="outline" class="input-container">
+
+                <mat-label>
+                    Official Work Email
+                </mat-label>
+
+                <input
+                    matInput
+                    type="email"
+                    formControlName="email">
+
+            </mat-form-field>
+
+            @if (email.invalid && email.touched) {
+
+                <mat-error>
+                    Please enter a valid company email address.
+                </mat-error>
+
+            }
+
+
+            <!-- Designation -->
+
+            <mat-form-field appearance="outline" class="input-container">
+
+                <mat-label>
+                    Designation
+                </mat-label>
+
+                <input
+                    matInput
+                    formControlName="designation">
+
+            </mat-form-field>
+
+            @if (designation.invalid && designation.touched) {
+
+                <mat-error>
+                    Designation is required.
+                </mat-error>
+
+            }
+
+            <!-- User Role -->
+
+            <mat-form-field appearance="outline" class="input-container">
+
+                <mat-label>
+                    Select Role
+                </mat-label>
+
+                <mat-select formControlName="userRole">
+
+                    @for (role of roles; track role.value) {
+
+                        <mat-option [value]="role.value">
+
+                            {{ role.viewValue }}
+
+                        </mat-option>
+
+                    }
+
+                </mat-select>
+
+            </mat-form-field>
+
+            @if (userRole.invalid && userRole.touched) {
+
+                <mat-error>
+                    Please select a role.
+                </mat-error>
+
+            }
+
+
+            <!-- STEP 2 BUTTONS -->
+
+            <div class="step-buttons">
+
+                <button
+                    matButton
+                    matStepperPrevious
+                    type="button">
+
+                    Back
+
+                </button>
+
+
+                <button
+                    matButton
+                    matStepperNext
+                    type="button">
+
+                    Next
+
+                </button>
+
+            </div>
+
+        </mat-step>
+
+
+        <mat-step errorMessage="Password is required.">
+
+            <ng-template matStepLabel>
+                Password
+            </ng-template>
+
+
+            <!-- Password -->
+
+            <mat-form-field
+                appearance="outline"
+                class="input-container">
+
+                <mat-label>
+                    Enter your password
+                </mat-label>
+
+                <input
+                    matInput
+                    [type]="hidePassword ? 'password' : 'text'"
+                    formControlName="password">
+
+
+                <!-- Password visibility button -->
+
+                <button
+                    mat-icon-button
+                    matSuffix
+                    type="button"
+                    (click)="hidePassword = !hidePassword"
+                    [attr.aria-label]="
+                        hidePassword
+                        ? 'Show password'
+                        : 'Hide password'
+                    "
+                    [attr.aria-pressed]="!hidePassword">
+
+                    <mat-icon>
+
+                        {{
+                            hidePassword
+                            ? 'visibility_off'
+                            : 'visibility'
+                        }}
+
+                    </mat-icon>
+
+                </button>
+
+            </mat-form-field>
+
+
+            @if (password.touched && password.invalid) {
+
+                <mat-error>
+                    Password must be at least 12 characters long.
+                </mat-error>
+
+            }
+
+            <br>
+
+
+            <!-- Confirm Password -->
+
+            <mat-form-field
+                appearance="outline"
+                class="input-container">
+
+                <mat-label>
+                    Confirm Password
+                </mat-label>
+
+                <input
+                    matInput
+                    [type]="
+                        hideConfirmPassword
+                        ? 'password'
+                        : 'text'
+                    "
+                    formControlName="confirmPassword">
+
+
+                <!-- Confirm password visibility button -->
+
+                <button mat-icon-button matSuffix type="button" (click)="hideConfirmPassword =!hideConfirmPassword"
+                    [attr.aria-label]="hideConfirmPassword ? 'Show password' : 'Hide password'"
+                    [attr.aria-pressed]="!hideConfirmPassword">
+
+                    <mat-icon>{{
+                            hideConfirmPassword
+                            ? 'visibility_off'
+                            : 'visibility'
+                        }}
+
+                    </mat-icon>
+
+                </button>
+
+            </mat-form-field>
+
+
+            @if ((confirmPassword.touched && confirmPassword.invalid)) {
+
+                <mat-error>Please confirm your password.</mat-error>
+
+            }
+            @if(confirmPassword.value !== password.value){
+                <mat-error>Passwords do not match.</mat-error>
+            }
+
+            <br>
+
+
+            <!-- STEP 3 BUTTONS -->
+
+            <div class="step-buttons">
+
+                <button matButton matStepperPrevious type="button">  Back </button>
+
+
+                <button matButton matStepperNext type="button"> Next </button>
+
+            </div>
+        </mat-step>
+
+  
+        <mat-step>
+
+            <ng-template matStepLabel>
+                Complete
+            </ng-template>
+
+
+            <div class="complete-section">
+
+                <h3>
+                    Ready to create your account
+                </h3>
+
+                <p>
+                    Please review your information
+                    before creating the user.
+                </p>
+
+            </div>
+
+            <div class="step-buttons">
+
+                <button
+                    matButton
+                    matStepperPrevious
+                    type="button">
+
+                    Back
+
+                </button>
+
+
+                <button matButton="filled" type="button" (click)="createUser()">Create User </button>
+                <button matButton type="button" (click)="stepper.reset()"> Reset</button>
+
+            </div>
+
+        </mat-step>
+
+
+    </mat-stepper>
+
+</form>
+<!-- <p>Signup works!</p>
+
+<form [formGroup]="signUpForm" class="my-form">
+
+    <mat-stepper #stepper>
+
+       
+        <mat-step>
+
+            <ng-template matStepLabel>
+                Personal Information
+            </ng-template>
+
+
+
+            <mat-form-field class="input-container">
+
+                <mat-label>
+                    Employee ID
+                </mat-label>
+
+                <input
+                    matInput
+                    type="number"
+                    formControlName="employeeId">
+
+            </mat-form-field>
+
+            @if (employeeId.invalid && employeeId.touched) {
+
+                <mat-error>
+                    {{ messages['employeeId.required'] }}
+                </mat-error>
+
+            }
+
+            <br>
+
+
+
+            <mat-form-field class="input-container">
+
+                <mat-label>
+                    First Name
+                </mat-label>
+
+                <input
+                    matInput
+                    formControlName="firstName">
+
+            </mat-form-field>
+
+            @if (firstName.invalid && firstName.touched) {
+
+                <mat-error>
+                    {{ messages['firstName.required'] }}
+                </mat-error>
+
+            }
+
+            <br>
+
+
+
+            <mat-form-field class="input-container">
+
+                <mat-label>
+                    Middle Name
+                </mat-label>
+
+                <input
+                    matInput
+                    formControlName="middleName">
+
+            </mat-form-field>
+
+            <br>
+
+
+
+            <mat-form-field class="input-container">
+
+                <mat-label>
+                    Last Name
+                </mat-label>
+
+                <input
+                    matInput
+                    formControlName="lastName">
+
+            </mat-form-field>
+
+            @if (lastName.invalid && lastName.touched) {
+
+                <mat-error>
+                    {{ messages['lastName.required'] }}
+                </mat-error>
+
+            }
+
+            <br>
+
+
+
+            <div class="step-buttons">
+
+                <button
+                    matButton
+                    matStepperNext
+                    type="button">
+
+                    Next
+
+                </button>
+
+            </div>
+
+        </mat-step>
+
+
+
+
+        <mat-step>
+
+            <ng-template matStepLabel>
+                Contact & Role
+            </ng-template>
+
+
+
+            <mat-form-field class="input-container">
+
+                <mat-label>
+                    Phone Number
+                </mat-label>
+
+                <input
+                    matInput
+                    formControlName="phoneNo">
+
+            </mat-form-field>
+
+            @if (phoneNo.invalid && phoneNo.touched) {
+
+                <mat-error>
+                    {{ messages['phoneNo.invalid'] }}
+                </mat-error>
+
+            }
+
+            <br>
+
+
+
+            <mat-form-field class="input-container">
+
+                <mat-label>
+                    Official Work Email
+                </mat-label>
+
+                <input
+                    matInput
+                    formControlName="email">
+
+            </mat-form-field>
+
+            @if (email.invalid && email.touched) {
+
+                <mat-error>
+                    {{ messages['email.invalid'] }}
+                </mat-error>
+
+            }
+
+            <br>
+
+
+
+            <mat-form-field class="input-container">
+
+                <mat-label>
+                    Designation
+                </mat-label>
+
+                <input
+                    matInput
+                    formControlName="designation">
+
+            </mat-form-field>
+
+            @if (designation.invalid && designation.touched) {
+
+                <mat-error>
+                    {{ messages['designation.required'] }}
+                </mat-error>
+
+            }
+
+            <br>
+
+
+
+            <mat-form-field class="input-container">
+
+                <mat-label>
+                    Select Role
+                </mat-label>
+
+                <mat-select formControlName="userRole">
+
+                    @for (role of roles; track role.value) {
+
+                        <mat-option [value]="role.value">
+
+                            {{ role.viewValue }}
+
+                        </mat-option>
+
+                    }
+
+                </mat-select>
+
+            </mat-form-field>
+
+            @if (userRole.invalid && userRole.touched) {
+
+                <mat-error>
+                    {{ messages['userRole.required'] }}
+                </mat-error>
+
+            }
+
+            <br>
+
+
+
+            <div class="step-buttons">
+
+                <button
+                    matButton
+                    matStepperPrevious
+                    type="button">
+
+                    Back
+
+                </button>
+
+                <button
+                    matButton
+                    matStepperNext
+                    type="button">
+
+                    Next
+
+                </button>
+
+            </div>
+
+        </mat-step>
+
+
+
+        
+
+        <mat-step>
+
+            <ng-template matStepLabel>
+                Password
+            </ng-template>
+
+
+
+            <mat-form-field
+                appearance="outline"
+                class="input-container">
+
+                <mat-label>
+                    Enter your password
+                </mat-label>
+
+                <input
+                    matInput
+                    [type]="hidePassword ? 'password' : 'text'"
+                    formControlName="password">
+
+
+                <button
+                    mat-icon-button
+                    matSuffix
+                    type="button"
+                    (click)="hidePassword = !hidePassword"
+                    [attr.aria-label]="
+                        hidePassword
+                        ? 'Show password'
+                        : 'Hide password'
+                    "
+                    [attr.aria-pressed]="!hidePassword">
+
+                    <mat-icon>
+
+                        {{
+                            hidePassword
+                            ? 'visibility_off'
+                            : 'visibility'
+                        }}
+
+                    </mat-icon>
+
+                </button>
+
+            </mat-form-field>
+
+
+            @if (password.touched && password.invalid) {
+
+                <mat-error>
+                    {{ messages['password.invalid'] }}
+                </mat-error>
+
+            }
+
+            <br>
+
+
+
+            <mat-form-field
+                appearance="outline"
+                class="input-container">
+
+                <mat-label>
+                    Confirm Password
+                </mat-label>
+
+                <input
+                    matInput
+                    [type]="
+                        hideConfirmPassword
+                        ? 'password'
+                        : 'text'
+                    "
+                    formControlName="confirmPassword">
+
+
+                <button
+                    mat-icon-button
+                    matSuffix
+                    type="button"
+                    (click)="
+                        hideConfirmPassword =
+                        !hideConfirmPassword
+                    "
+                    [attr.aria-label]="
+                        hideConfirmPassword
+                        ? 'Show password'
+                        : 'Hide password'
+                    "
+                    [attr.aria-pressed]="
+                        !hideConfirmPassword
+                    ">
+
+                    <mat-icon>
+
+                        {{
+                            hideConfirmPassword
+                            ? 'visibility_off'
+                            : 'visibility'
+                        }}
+
+                    </mat-icon>
+
+                </button>
+
+            </mat-form-field>
+
+
+            @if (
+                confirmPassword.touched &&
+                confirmPassword.invalid
+            ) {
+
+                <mat-error>
+                    {{ messages['confirmPassword.required'] }}
+                </mat-error>
+
+            }
+
+            <br>
+
+
+
+            <div class="step-buttons">
+
+                <button
+                    matButton
+                    matStepperPrevious
+                    type="button">
+
+                    Back
+
+                </button>
+
+                <button
+                    matButton
+                    matStepperNext
+                    type="button">
+
+                    Next
+
+                </button>
+
+            </div>
+
+        </mat-step>
+
+
+
+
+        <mat-step>
+
+            <ng-template matStepLabel>
+                Complete
+            </ng-template>
+
+
+            <div class="complete-section">
+
+                <h3>
+                    Ready to create your account
+                </h3>
+
+                <p>
+                    Please review your information
+                    before creating the user.
+                </p>
+
+            </div>
+
+
+
+            <div class="step-buttons">
+
+                <button
+                    matButton
+                    matStepperPrevious
+                    type="button">
+
+                    Back
+
+                </button>
+
+
+                <button
+                    matButton="filled"
+                    type="button"
+                    (click)="createUser()">
+
+                    Create User
+
+                </button>
+
+
+                <button
+                    matButton
+                    type="button"
+                    (click)="stepper.reset()">
+
+                    Reset
+
+                </button>
+
+            </div>
+
+        </mat-step>
+
+    </mat-stepper>
+
+</form> -->
