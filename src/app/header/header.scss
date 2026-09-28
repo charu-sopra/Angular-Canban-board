@@ -21,8 +21,7 @@
 
 .header__secondary-menu {
   height: 5px;
-  background: #5f2d91;
- background: $brand-gradient;
+  background: $brand-gradient;
 
 }
 
@@ -34,6 +33,7 @@
 
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   padding: 0 30px;
 

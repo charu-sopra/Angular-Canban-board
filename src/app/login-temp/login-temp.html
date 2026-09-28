@@ -1,0 +1,123 @@
+<form
+    [formGroup]="loginForm"
+    (ngSubmit)="login()"
+    class="my-form">
+
+
+    <!-- LOGIN TITLE -->
+
+    <h3 style="margin-bottom: 25px;">
+        Login
+    </h3>
+
+
+    <!-- EMAIL -->
+
+    <mat-form-field
+        appearance="outline"
+        class="input-container">
+
+        <mat-label>
+            Email
+        </mat-label>
+
+        <input
+            matInput
+            type="email"
+            formControlName="email">
+
+    </mat-form-field>
+
+
+    @if (loginForm.controls.email.touched &&
+         loginForm.controls.email.invalid) {
+
+        <mat-error>
+            Please enter your email address.
+        </mat-error>
+
+    }
+    <br>
+    <!-- PASSWORD -->
+
+    <mat-form-field
+        appearance="outline"
+        class="input-container">
+
+        <mat-label>
+            Enter your password
+        </mat-label>
+
+        <input
+            matInput
+            [type]="hidePassword ? 'password' : 'text'"
+            formControlName="password">
+
+
+        <!-- PASSWORD VISIBILITY BUTTON -->
+
+        <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="hidePassword = !hidePassword"
+            [attr.aria-label]="
+                hidePassword
+                ? 'Show password'
+                : 'Hide password'
+            "
+            [attr.aria-pressed]="!hidePassword">
+
+            <mat-icon>
+
+                {{
+                    hidePassword
+                    ? 'visibility_off'
+                    : 'visibility'
+                }}
+
+            </mat-icon>
+
+        </button>
+
+    </mat-form-field>
+
+
+    @if (loginForm.controls.password.touched &&
+         loginForm.controls.password.invalid) {
+
+        <mat-error>
+            Please enter your password.
+        </mat-error>
+
+    }
+
+    <!-- ACCOUNT / SIGNUP -->
+
+    <p>
+        Don't have an account?
+    </p>
+
+
+    <div class="step-buttons">
+
+        <button matButton type="button" routerLink="/signup">
+            Signup
+        </button>
+
+
+        <!-- LOGIN -->
+
+        <button matButton="filled" type="submit">
+            Login
+        </button>
+       <!-- RESET -->
+
+        <button matButton type="button" (click)="reset()">
+            Reset
+        </button>
+
+    </div>
+
+
+</form>

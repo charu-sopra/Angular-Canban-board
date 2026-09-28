@@ -28,7 +28,7 @@
             @if (employeeId.invalid && employeeId.touched) {
 
                 <mat-error>
-                    Employee ID is required.
+                    {{messageList['employeeId.required']}}                
                 </mat-error>
 
             }
@@ -250,24 +250,13 @@
                     Enter your password
                 </mat-label>
 
-                <input
-                    matInput
-                    [type]="hidePassword ? 'password' : 'text'"
+                <input matInput [type]="hidePassword ? 'password' : 'text'"
                     formControlName="password">
-
 
                 <!-- Password visibility button -->
 
-                <button
-                    mat-icon-button
-                    matSuffix
-                    type="button"
-                    (click)="hidePassword = !hidePassword"
-                    [attr.aria-label]="
-                        hidePassword
-                        ? 'Show password'
-                        : 'Hide password'
-                    "
+                <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword"
+                    [attr.aria-label]=" hidePassword? 'Show password': 'Hide password'"
                     [attr.aria-pressed]="!hidePassword">
 
                     <mat-icon>
@@ -278,9 +267,7 @@
                             : 'visibility'
                         }}
 
-                    </mat-icon>
-
-                </button>
+                    </mat-icon></button>
 
             </mat-form-field>
 
@@ -340,7 +327,7 @@
                 <mat-error>Please confirm your password.</mat-error>
 
             }
-            @if(confirmPassword.value !== password.value){
+            @if(confirmPassword.touched && (confirmPassword.value !== password.value)){
                 <mat-error>Passwords do not match.</mat-error>
             }
 
@@ -352,17 +339,15 @@
             <div class="step-buttons">
 
                 <button matButton matStepperPrevious type="button">  Back </button>
-
-
                 <button matButton matStepperNext type="button"> Next </button>
 
             </div>
         </mat-step>
 
   
-        <mat-step>
+        <mat-step >
 
-            <ng-template matStepLabel>
+            <ng-template matStepLabel >
                 Complete
             </ng-template>
 
@@ -390,9 +375,16 @@
                     Back
 
                 </button>
+                <button matButton="filled" [disabled]="isSubmitting || signUpForm.invalid" type="button" (click)="createUser()">
+                     {{ isSubmitting ? 'Creating User...' : 'Create User' }}
+                </button>
 
-
-                <button matButton="filled" type="button" (click)="createUser()">Create User </button>
+                @if (successMessage) {
+                    <div class="success-message">
+                        {{ successMessage }}
+                    </div>
+                    }
+                
                 <button matButton type="button" (click)="stepper.reset()"> Reset</button>
 
             </div>

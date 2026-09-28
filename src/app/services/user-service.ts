@@ -13,7 +13,9 @@ export class UserService {
 
     console.log('FORM DATA:', userData);
 
-    return this.http.post(this.apiUrl, userData);
+
+  return this.http.post('http://localhost:8080/signup', userData, 
+    {observe: 'response'})  
   }
 }
 
