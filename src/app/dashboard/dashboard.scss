@@ -1,0 +1,26 @@
+.dashboard-container {
+  padding: 24px;
+}
+
+.dashboard-container h2 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.dashboard-subtitle {
+  margin: 0 0 24px;
+  color: #777;
+  font-size: 14px;
+}
+
+.chart-card {
+  max-width: 850px;
+  border-radius: 12px;
+}
+
+.task-chart {
+  width: 100%;
+  height: 350px;
+  margin-top: 16px;
+}

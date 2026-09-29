@@ -1,0 +1,177 @@
+<div class="kanban-board">
+
+    <!-- ==================== TO DO ==================== -->
+
+    <div class="board-column">
+
+        <div class="column-header">
+            <h2>To Do</h2>
+            <span class="task-count">{{ todo.length }}</span>
+        </div>
+
+        <div
+            cdkDropList
+            class="task-list"
+            #todoList="cdkDropList"
+            [cdkDropListData]="todo"
+            [cdkDropListConnectedTo]="[inProgressList, finishedList]"
+            (cdkDropListDropped)="drop($event)">
+
+            @for (item of todo; track item) {
+
+                <div cdkDrag class="task-card">
+
+                    <div class="task-card-top">
+
+                        <div class="task-title">
+                            {{ item.title }}
+                        </div>
+
+                        <div class="task-priority">
+                            {{ item.priority }}
+                        </div>
+
+                    </div>
+
+                    <div class="task-description">
+                        {{ item.description }}
+                    </div>
+
+                    <div class="task-card-bottom">
+
+                        <div class="task-assignee">
+                            {{ item.assignee }}
+                        </div>
+
+                        <div class="task-date">
+                            {{ item.dueDate }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            }
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================== IN PROGRESS ==================== -->
+
+    <div class="board-column">
+
+        <div class="column-header">
+            <h2>In Progress</h2>
+            <span class="task-count">{{ inProgress.length }}</span>
+        </div>
+
+        <div
+            cdkDropList
+            class="task-list"
+            #inProgressList="cdkDropList"
+            [cdkDropListData]="inProgress"
+            [cdkDropListConnectedTo]="[todoList, finishedList]"
+            (cdkDropListDropped)="drop($event)">
+
+            @for (item of inProgress; track item) {
+
+                <div cdkDrag class="task-card">
+
+                    <div class="task-card-top">
+
+                        <div class="task-title">
+                            {{ item.title }}
+                        </div>
+
+                        <div class="task-priority">
+                            {{ item.priority }}
+                        </div>
+
+                    </div>
+
+                    <div class="task-description">
+                        {{ item.description }}
+                    </div>
+
+                    <div class="task-card-bottom">
+
+                        <div class="task-assignee">
+                            {{ item.assignee }}
+                        </div>
+
+                        <div class="task-date">
+                            {{ item.dueDate }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            }
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================== FINISHED ==================== -->
+
+    <div class="board-column">
+
+        <div class="column-header">
+            <h2>Finished</h2>
+            <span class="task-count">{{ finished.length }}</span>
+        </div>
+
+        <div
+            cdkDropList
+            class="task-list"
+            #finishedList="cdkDropList"
+            [cdkDropListData]="finished"
+            [cdkDropListConnectedTo]="[todoList, inProgressList]"
+            (cdkDropListDropped)="drop($event)"
+        >
+
+            @for (item of finished; track item) {
+
+                <div cdkDrag class="task-card">
+
+                    <div class="task-card-top">
+
+                        <div class="task-title">
+                            {{ item.title }}
+                        </div>
+
+                        <div class="task-priority">
+                            {{ item.priority }}
+                        </div>
+
+                    </div>
+
+                    <div class="task-description">
+                        {{ item.description }}
+                    </div>
+
+                    <div class="task-card-bottom">
+
+                        <div class="task-assignee">
+                            {{ item.assignee }}
+                        </div>
+
+                        <div class="task-date">
+                            {{ item.dueDate }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            }
+
+        </div>
+
+    </div>
+
+</div>

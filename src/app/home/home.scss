@@ -1,0 +1,49 @@
+[cdkDropListGroup] {
+  display: flex;
+  gap: 20px;
+
+  margin-top: 80px;
+  
+}
+
+
+.board-column {
+  width: 300px;
+}
+.task-list {
+  min-height: 300px;
+  background: #f4f4f4;
+  padding: 12px;
+  border-radius: 8px;
+}
+.task-card {
+  background: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  cursor: move;
+}
+
+.sidenav-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #eee;
+  height: 100vh;
+  width: 100%;
+margin-top: 80px;
+
+//   width: 180px;
+}
+
+.sidebar {
+    width: 180px;
+}
+
+.sidenav-link:hover{
+    transition: transform 0.2s ease;
+    cursor: pointer;
+
+}
