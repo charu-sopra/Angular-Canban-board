@@ -1,0 +1,89 @@
+/* Main ticket form */
+.ticket-form {
+    width: 600px;
+    max-width: 90%;
+    margin: 50px auto;
+    padding: 35px 40px;
+
+    background: #ffffff;
+    border-radius: 16px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+
+    box-sizing: border-box;
+}
+
+
+/* Heading */
+.ticket-form h2 {
+    text-align: center;
+    margin: 0 0 30px;
+
+    font-size: 28px;
+    font-weight: 600;
+}
+
+
+/* Input fields */
+.input-container {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+
+/* Description field */
+textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+
+/* Error messages */
+mat-error {
+    display: block;
+    margin: -5px 0 15px 5px;
+
+    font-size: 13px;
+}
+
+
+/* Buttons container */
+.ticket-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+
+    margin-top: 25px;
+}
+
+
+/* Buttons */
+.ticket-buttons button {
+    min-width: 140px;
+    height: 44px;
+
+    font-size: 15px;
+}
+
+
+/* Responsive design */
+@media (max-width: 650px) {
+
+    .ticket-form {
+        width: 90%;
+        padding: 25px 20px;
+        margin: 30px auto;
+    }
+
+    .ticket-form h2 {
+        font-size: 24px;
+    }
+
+    .ticket-buttons {
+        flex-direction: column;
+    }
+
+    .ticket-buttons button {
+        width: 100%;
+    }
+}

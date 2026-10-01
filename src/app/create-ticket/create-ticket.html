@@ -1,0 +1,204 @@
+<form
+    [formGroup]="ticketForm"
+    (ngSubmit)="createTicket()"
+    class="ticket-form">
+
+    <!-- TITLE -->
+
+    <h2>
+        Create Ticket
+    </h2>
+
+
+    <!-- Ticket Title -->
+
+    <mat-form-field
+        appearance="outline"
+        class="input-container">
+
+        <mat-label>
+            Ticket Title
+        </mat-label>
+
+        <input
+            matInput
+            type="text"
+            formControlName="title"
+            placeholder="Enter ticket title">
+
+    </mat-form-field>
+
+    @if (
+        ticketForm.controls.title.touched &&
+        ticketForm.controls.title.invalid
+    ) {
+        <mat-error>
+            Title is required and must not exceed 150 characters.
+        </mat-error>
+    }
+
+
+    <!-- DESCRIPTION -->
+
+    <mat-form-field
+        appearance="outline"
+        class="input-container">
+
+        <mat-label>
+            Description
+        </mat-label>
+
+        <textarea
+            matInput
+            rows="5"
+            formControlName="description"
+            placeholder="Describe the issue">
+
+        </textarea>
+
+    </mat-form-field>
+
+    @if (
+        ticketForm.controls.description.touched &&
+        ticketForm.controls.description.invalid
+    ) {
+        <mat-error>
+            Description is required.
+        </mat-error>
+    }
+
+
+    <!-- PRIORITY -->
+
+    <mat-form-field
+        appearance="outline"
+        class="input-container">
+
+        <mat-label>
+            Ticket Priority
+        </mat-label>
+
+        <mat-select formControlName="ticketPriority">
+
+            <mat-option value="LOW">
+                Low
+            </mat-option>
+
+            <mat-option value="MEDIUM">
+                Medium
+            </mat-option>
+
+            <mat-option value="HIGH">
+                High
+            </mat-option>
+
+        </mat-select>
+
+    </mat-form-field>
+
+
+    @if (
+        ticketForm.controls.ticketPriority.touched &&
+        ticketForm.controls.ticketPriority.invalid
+    ) {
+        <mat-error>
+            Please select a priority.
+        </mat-error>
+    }
+
+
+    <!-- STATUS -->
+
+    <mat-form-field
+        appearance="outline"
+        class="input-container">
+
+        <mat-label>
+            Ticket Status
+        </mat-label>
+
+        <mat-select formControlName="ticketStatus">
+
+            <mat-option value="OPEN">
+                Open
+            </mat-option>
+
+            <mat-option value="IN_PROGRESS">
+                In Progress
+            </mat-option>
+
+            <mat-option value="RESOLVED">
+                Resolved
+            </mat-option>
+
+            <mat-option value="CLOSED">
+                Closed
+            </mat-option>
+
+        </mat-select>
+
+    </mat-form-field>
+
+
+    <!-- CREATED BY -->
+<!-- 
+    <mat-form-field
+        appearance="outline"
+        class="input-container">
+
+        <mat-label>
+            Created By
+        </mat-label>
+
+        <input
+            matInput
+            type="number"
+            formControlName="createdBy">
+
+    </mat-form-field> -->
+
+
+    <!-- UPDATED BY -->
+
+    <!-- <mat-form-field
+        appearance="outline"
+        class="input-container">
+
+        <mat-label>
+            Updated By
+        </mat-label>
+
+        <input
+            matInput
+            type="number"
+            formControlName="updatedBy">
+
+    </mat-form-field> -->
+
+
+    <!-- BUTTONS -->
+
+    <div class="ticket-buttons">
+
+        <button
+            matButton="filled"
+            type="submit"
+            [disabled]="ticketForm.invalid">
+
+            Create Ticket
+
+        </button>
+
+
+        <button
+            matButton
+            type="button"
+            (click)="reset()">
+
+            Reset
+
+        </button>
+
+    </div>
+
+</form>

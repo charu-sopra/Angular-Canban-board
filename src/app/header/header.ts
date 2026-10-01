@@ -4,7 +4,7 @@ import { MatListItemIcon } from '@angular/material/list';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  imports: [MatListItemIcon ,MatButtonModule,RouterLink],
+  imports: [MatButtonModule,RouterLink],
   selector: 'app-header',
   styleUrl: './header.scss',
   templateUrl: './header.html',

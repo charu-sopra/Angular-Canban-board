@@ -4,7 +4,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 @Component({
-  imports: [MatSidenavModule , MatListModule, CdkDrag, CdkDropList,CdkDropListGroup],
+  imports: [MatSidenavModule , MatListModule, CdkDrag, CdkDropList],
   selector: 'app-kanban',
   styleUrl: './kanban.scss',
   templateUrl: './kanban.html',
