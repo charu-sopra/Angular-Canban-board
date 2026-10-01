@@ -1,7 +1,9 @@
 import { CdkDrag, CdkDropList, CdkDropListGroup, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { TicketService } from '../services/ticket.service';
+import { Component, OnInit } from '@angular/core';
+import { TicketResponse } from '../model/ticket.model';
 
 @Component({
   imports: [MatSidenavModule , MatListModule, CdkDrag, CdkDropList],
@@ -11,42 +13,57 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 })
 
 
-export class Kanban {
-  todo = [
-  {
-        title: 'Angular Material Walkthrough',
-        priority: 'HIGH',
-        description: 'Learn Angular Material',
-        assignee: 'Pranav',
-        dueDate: '10 Sept 2026'
-    },
-  {
-        title: 'Create signup page',
-        priority: 'MEDIUM',
-        description: 'Create signup page',
-        assignee: 'Sandeep',
-        dueDate: '15 Oct 2026'
-    }
-];
-inProgress = [
-        {
-            title: 'Routing in Angular',
-            priority: 'HIGH',
-            description: 'Set up routing between application pages',
-            assignee: 'Pranav',
-            dueDate: '18 Oct 2026'
-        }
-    ];
+export class Kanban implements OnInit {
+  todo: TicketResponse[] = [];  
+  inProgress: TicketResponse[] = [];
+  finished: TicketResponse[] = [];
 
-    finished = [
-        {
-            title: 'Setup Angular',
-            priority: 'LOW',
-            description: 'Complete initial Angular project setup',
-            assignee: 'Sandeep',
-            dueDate: '5 Oct 2026'
-        }
-    ];
+  constructor(private ticketService: TicketService) {}
+
+  ngOnInit() {
+  this.ticketService.getTickets().subscribe(response => {
+
+    for (let ticket of response) {
+
+      console.log(
+        'Checking:',
+        ticket.id,
+        ticket.title,
+        ticket.ticketStatus
+      );
+
+      if (ticket.ticketStatus === 'OPEN') {
+
+        this.todo.push(ticket);
+
+        console.log('→ Added to TODO:', ticket.id);
+
+      }
+      else if (ticket.ticketStatus === 'IN_PROGRESS') {
+
+        this.inProgress.push(ticket);
+
+        console.log('→ Added to IN PROGRESS:', ticket.id);
+
+      }
+      else if (
+        ticket.ticketStatus === 'RESOLVED' ||
+        ticket.ticketStatus === 'CLOSED'
+      ) {
+
+        this.finished.push(ticket);
+
+        console.log('→ Added to FINISHED:', ticket.id);
+
+      }
+    }
+
+    console.log('TODO:', this.todo);
+    console.log('IN PROGRESS:', this.inProgress);
+    console.log('FINISHED:', this.finished);
+  });
+}
+
 
 drop(event: CdkDragDrop<any[]>) {
   if (event.previousContainer === event.container){
@@ -69,5 +86,6 @@ drop(event: CdkDragDrop<any[]>) {
   //   moveItemInArray(this.movies, event.previousIndex, event.currentIndex);
   // }
 }
+
 
 

@@ -13,3 +13,16 @@ export interface TicketRequest {
 //   updatedBy: number;
 
 }
+
+export interface TicketResponse {
+
+  id: number;
+  title: string;
+  description: string;
+  ticketStatus: string;
+  ticketPriority: string;
+  createdBy: string;
+  createdAt: string;
+  updatedBy: string | null;
+  updatedAt: string | null;
+}

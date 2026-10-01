@@ -79,21 +79,6 @@ export class LoginTemp {
   ) {}
 
   login() {
-
-    // .value
-    //      ↓
-    // means: "give me the value entered by the user"
-    //
-    // ?.value
-    //      ↓
-    // means:
-    // "If the email control exists, get its value."
-    //
-    // ?? ''
-    //      ↓
-    // means:
-    // "If the value is null/undefined,
-    //  use an empty string instead."
     const email =this.loginForm.get('email')?.value ?? '';
 
     const password =this.loginForm.get('password')?.value ?? '';
@@ -170,7 +155,6 @@ export class LoginTemp {
     this.loginForm.setValue({
       email: '',
       password: ''
-
     });
 
   }

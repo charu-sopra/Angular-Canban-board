@@ -15,40 +15,13 @@
             #todoList="cdkDropList"
             [cdkDropListData]="todo"
             [cdkDropListConnectedTo]="[inProgressList, finishedList]"
-            (cdkDropListDropped)="drop($event)">
+            (cdkDropListDropped)="drop($event)"
+        >
 
             @for (item of todo; track item) {
 
-                <div cdkDrag class="task-card">
-
-                    <div class="task-card-top">
-
-                        <div class="task-title">
-                            {{ item.title }}
-                        </div>
-
-                        <div class="task-priority">
-                            {{ item.priority }}
-                        </div>
-
-                    </div>
-
-                    <div class="task-description">
-                        {{ item.description }}
-                    </div>
-
-                    <div class="task-card-bottom">
-
-                        <div class="task-assignee">
-                            {{ item.assignee }}
-                        </div>
-
-                        <div class="task-date">
-                            {{ item.dueDate }}
-                        </div>
-
-                    </div>
-
+                <div>
+                    {{ item.title }}
                 </div>
 
             }
@@ -73,7 +46,8 @@
             #inProgressList="cdkDropList"
             [cdkDropListData]="inProgress"
             [cdkDropListConnectedTo]="[todoList, finishedList]"
-            (cdkDropListDropped)="drop($event)">
+            (cdkDropListDropped)="drop($event)"
+        >
 
             @for (item of inProgress; track item) {
 
@@ -86,7 +60,7 @@
                         </div>
 
                         <div class="task-priority">
-                            {{ item.priority }}
+                            {{ item.ticketPriority }}
                         </div>
 
                     </div>
@@ -98,11 +72,11 @@
                     <div class="task-card-bottom">
 
                         <div class="task-assignee">
-                            {{ item.assignee }}
+                            {{ item.createdBy }}
                         </div>
 
                         <div class="task-date">
-                            {{ item.dueDate }}
+                            {{ item.createdAt }}
                         </div>
 
                     </div>
@@ -145,7 +119,7 @@
                         </div>
 
                         <div class="task-priority">
-                            {{ item.priority }}
+                            {{ item.ticketPriority }}
                         </div>
 
                     </div>
@@ -157,11 +131,11 @@
                     <div class="task-card-bottom">
 
                         <div class="task-assignee">
-                            {{ item.assignee }}
+                            {{ item.createdBy }}
                         </div>
 
                         <div class="task-date">
-                            {{ item.dueDate }}
+                            {{ item.createdAt }}
                         </div>
 
                     </div>
