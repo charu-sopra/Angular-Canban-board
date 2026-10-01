@@ -3,9 +3,11 @@ import { HttpClient } from '@angular/common/http';
 
 @Service()
 export class UserService {
-
+ 
   private http = inject(HttpClient);
+  
   apiUrl = 'http://localhost:8080/signup';
+  
 
   createUser(userData: any) {
 
@@ -14,8 +16,7 @@ export class UserService {
     console.log('FORM DATA:', userData);
 
 
-  return this.http.post('http://localhost:8080/signup', userData, 
-    {observe: 'response'})  
+  return this.http.post(this.apiUrl,userData,{ observe: 'response' }); 
   }
 }
 
