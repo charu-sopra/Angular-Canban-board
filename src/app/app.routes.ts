@@ -4,6 +4,7 @@ import { Signup } from './signup/signup';
 import { Home } from './home/home';
 import { Dashboard } from './dashboard/dashboard';
 import { Kanban } from './kanban/kanban';
+import { Ticket } from './create-ticket/create-ticket';
 
 export const routes: Routes = [
     {
@@ -17,6 +18,10 @@ export const routes: Routes = [
         {
             path: 'dashboard',
             component: Dashboard
+        },
+        {
+            path: 'create-ticket',
+            component: Ticket
         }
     ]
     },
@@ -37,10 +42,9 @@ export const routes: Routes = [
     {
     path: 'home',
     component: Home
-    }
-//     },
-//     {
-//     path: 'create-ticket',
-//     component: CreateTicket
-//   }
+    },
+    {
+    path: 'create-ticket',
+    component: Ticket
+  }
 ];

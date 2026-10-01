@@ -9,11 +9,21 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 // AuthService = our own service that talks to the Spring Boot login API
 
 @Component({
-  imports: [MatIconModule, MatFormFieldModule, MatSelectModule, ReactiveFormsModule,RouterLink],
+imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule
+  ],
   selector: 'app-login-temp',
   styleUrl: './login-temp.scss',
   templateUrl: './login-temp.html',

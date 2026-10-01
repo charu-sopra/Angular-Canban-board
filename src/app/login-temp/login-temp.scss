@@ -2,3 +2,90 @@
   margin-left: 8px;
 }
 
+// Main login form
+.my-form {
+  width: 400px;
+  margin: 60px auto;
+  padding: 35px 40px;
+
+  display: flex;
+  flex-direction: column;
+
+  background-color: #ffffff;
+  border-radius: 12px;
+
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+
+  box-sizing: border-box;
+}
+
+// Login heading
+.my-form h3 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  margin-top: 0 !important;
+  color: #333;
+}
+
+// Input fields
+.input-container {
+  width: 100%;
+}
+
+// Validation error
+mat-error {
+  font-size: 13px;
+  margin-top: -15px;
+  margin-bottom: 10px;
+}
+
+// Signup section
+.redirect-signup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.redirect-signup p {
+  margin: 0;
+  color: #555;
+  font-size: 14px;
+}
+
+// Buttons section
+.step-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+
+  margin-top: 10px;
+}
+
+// Login and Reset buttons
+.step-buttons button {
+  min-width: 100px;
+}
+
+// Signup button
+.redirect-signup button {
+  font-size: 14px;
+}
+
+// Password visibility button
+mat-icon {
+  font-size: 22px;
+}
+
+// Responsive design for smaller screens
+@media (max-width: 500px) {
+  .my-form {
+    width: 90%;
+    padding: 25px 20px;
+    margin: 40px auto;
+  }
+}

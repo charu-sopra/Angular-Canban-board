@@ -24,4 +24,8 @@ export class AuthService {
       }
     );
   }
+
+   logout(){
+    sessionStorage.removeItem('token');
+  }
 }
