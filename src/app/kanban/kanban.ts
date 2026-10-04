@@ -14,9 +14,9 @@ import { TicketResponse } from '../model/ticket.model';
 
 
 export class Kanban implements OnInit {
-  todo: TicketResponse[] = [];  
+ todo: TicketResponse[] = [];  
   inProgress: TicketResponse[] = [];
-  finished: TicketResponse[] = [];
+  finished: TicketResponse[] = []; 
 
   constructor(private ticketService: TicketService) {}
 
@@ -74,18 +74,53 @@ drop(event: CdkDragDrop<any[]>) {
     );
   }
   else{
+    //if moved to another column
     transferArrayItem(
       event.previousContainer.data, //from where youre moving it
       event.container.data, //where it is being brought
       event.previousIndex,  //idx of where it was
       event.currentIndex   //idx of where its brought now
     );
-  }
+    const ticket = event.container.data[event.currentIndex];
+    let newStatus: string;
+    if (event.container.data === this.todo) {
+      newStatus = 'OPEN';
+    }
+    else if (event.container.data === this.inProgress) {
+      newStatus = 'IN_PROGRESS';
+    }
+    else {
+      newStatus = 'RESOLVED';
+    }
+    // Update the ticket's status in Angular
+    ticket.ticketStatus = newStatus;
+    // Update the ticket in the backend
+  this.ticketService.updateTicket(ticket.id, {
+    title: ticket.title,
+    description: ticket.description,
+    ticketPriority: ticket.ticketPriority,
+    ticketStatus: newStatus
+  }).subscribe({
+
+    next: (response) => {
+      console.log('Ticket status updated successfully:', response);
+    },
+
+    error: (error) => {
+      console.error('Failed to update ticket status:', error);
+    }
+
+  });
+
 }
+
+}
+  }
+
   // drop(event: CdkDragDrop<string[]>) {
   //   moveItemInArray(this.movies, event.previousIndex, event.currentIndex);
   // }
-}
+
 
 
 
