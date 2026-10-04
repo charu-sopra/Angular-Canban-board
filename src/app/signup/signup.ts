@@ -8,7 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatStepperModule } from '@angular/material/stepper';
 import { RouterLink, RouterOutlet } from '@angular/router';
-
+import { LoggerService } from '../services/logger.service';
 
 
 interface Role {
@@ -49,6 +49,7 @@ export class Signup {
 ];
 
   private userService = inject(UserService);
+  private logger = inject(LoggerService);
 
   signUpForm = new FormGroup({
 
@@ -106,13 +107,15 @@ export class Signup {
     const formData = this.signUpForm.getRawValue();
 
     if (!formData.password) {
-      console.error('Password is missing');
+      //console.error('Password is missing');
+      this.logger.error('Password is missing');
       this.isSubmitting = false;
       return;
     }
 
-    console.log('FORM DATA:', formData);
-    console.log('PASSWORD:', formData.password);
+    //console.log('FORM DATA:', formData);
+    this.logger.info('Signup form submitted');
+   // console.log('PASSWORD:', formData.password);
 
     const encodedPassword = this.encodePassword(formData.password);
     console.log('ENCODED PASSWORD:', encodedPassword);

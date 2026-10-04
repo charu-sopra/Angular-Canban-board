@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { TicketService } from '../services/ticket.service';
 import { Router } from '@angular/router';
 import { TicketRequest } from '../model/ticket.model';
+import { LoggerService } from '../services/logger.service';
 
 @Component({
   selector: 'app-create-ticket',
@@ -39,7 +40,8 @@ export class Ticket {
 
   constructor(
     private ticketService: TicketService,
-    private router: Router
+    private router: Router,
+    private logger: LoggerService
   ) {}
 
 
@@ -50,8 +52,9 @@ export class Ticket {
       return;
     }
     
-
-    console.log('Ticket:', this.ticketForm.value);
+    //we will check it's functionality then remove
+    //console.log('Ticket:', this.ticketForm.value);
+    this.logger.info('Creating ticket');
 
      const ticket: TicketRequest = {
     title: this.ticketForm.value.title ?? '',
@@ -65,7 +68,8 @@ export class Ticket {
 
         next: (response) => {
 
-          console.log('Ticket created successfully:', response);
+          //console.log('Ticket created successfully:', response);
+          this.logger.info('Ticket created successfully');
 
           this.router.navigate(['/home']);
 
@@ -73,7 +77,8 @@ export class Ticket {
 
         error: (error) => {
 
-          console.error('Failed to create ticket:', error);
+         // console.error('Failed to create ticket:', error);
+         this.logger.error('Failed to create ticket', error);
 
         }
 
@@ -93,7 +98,7 @@ export class Ticket {
       // createdBy: null,
       // updatedBy: null
     });
-
+    this.logger.info('Ticket form reset');
   }
 
 }

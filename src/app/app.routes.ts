@@ -15,6 +15,7 @@ export const routes: Routes = [
             path: '',
             component: Kanban
         },
+        
         {
             path: 'dashboard',
             component: Dashboard
