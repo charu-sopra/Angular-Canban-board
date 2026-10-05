@@ -26,3 +26,11 @@ export interface TicketResponse {
   updatedBy: string | null;
   updatedAt: string | null;
 }
+
+export interface TicketPageResponse {
+  content: TicketResponse[];
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  number: number;
+}

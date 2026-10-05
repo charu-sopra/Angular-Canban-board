@@ -1,31 +1,102 @@
 <header id="header" class="header home">
+  <div class="header__secondary-menu"></div>
 
-
-  
-  <!-- Secondary purple menu -->
-  <div class="header__secondary-menu">
-  </div>
-
-
-  <!-- Main header -->
   <div class="header__primary-menu">
-
-    <!-- Logo -->
-    <a href="#"
+    <a routerLink="/home"
       class="primary-menu__logo"
       aria-label="Sopra Steria - Return to home page">
-      
-      <img src="SOPRASTERIA_logo_RVB_exe.png"
-        alt="Sopra Steria">
+      <img src="SOPRASTERIA_logo_RVB_exe.png" alt="Sopra Steria">
     </a>
 
-    <div>
-        <button  matButton type="button" routerLink="/login">
-            Log In
-        </button>
+    <div class="header__ticket-search">
+      <label class="visually-hidden" for="ticket-search">Search tickets</label>
+      <input
+        id="ticket-search"
+        type="search"
+        placeholder="Search tickets..."
+        autocomplete="off"
+        [value]="searchQuery"
+        (input)="onSearchInput($event)"
+        (keydown.escape)="clearSearch()"
+        aria-controls="ticket-search-results"
+        [attr.aria-expanded]="!!searchQuery">
+
+            @if (searchQuery) {
+        <section
+          id="ticket-search-results"
+          class="search-results"
+          aria-label="Ticket search results">
+
+          @if (isLoadingTickets) {
+
+            <p class="search-message" role="status">
+              Searching tickets...
+            </p>
+
+          } @else if (searchError) {
+
+            <div
+              class="search-message search-message--error"
+              role="alert">
+
+              <span>Tickets could not be loaded.</span>
+
+              <button
+                type="button"
+                (click)="retrySearch()">
+                Try again
+              </button>
+
+            </div>
+
+          } @else if (tickets.length === 0) {
+
+            <p class="search-message" role="status">
+              No matching tickets.
+            </p>
+
+          } @else {
+
+            <div class="search-result-list">
+
+              @for (ticket of tickets; track ticket.id) {
+
+                <article class="search-result">
+
+                  <div class="search-result__meta">
+
+                    <span>
+                      Ticket #{{ ticket.id }}
+                    </span>
+
+                    <span class="search-result__status">
+                      {{ ticket.ticketStatus.replace('_', ' ') }}
+                    </span>
+
+                  </div>
+
+                  <h2>
+                    {{ ticket.title }}
+                  </h2>
+
+                  <p>
+                    {{ ticket.description }}
+                  </p>
+
+                  <span class="search-result__priority">
+                    {{ ticket.ticketPriority }} priority
+                  </span>
+
+                </article>
+
+              }
+
+            </div>
+          }
+        </section>
+      }
     </div>
 
-
+    <a matButton routerLink="/login" class="primary-menu__login">Log In</a>
   </div>
-
 </header>
