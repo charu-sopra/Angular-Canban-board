@@ -14,6 +14,24 @@ export class TicketService {
 
   // Get all
   getTickets() {  return this.http.get<TicketPageResponse>(this.apiUrl);
+  }
+
+  // Search tickets
+searchTickets(
+  query: string,
+  page: number = 0,
+  size: number = 10
+) {
+  return this.http.get<TicketPageResponse>(
+    `${this.apiUrl}/search`,
+    {
+      params: {
+        query,
+        page,
+        size
+      }
+    }
+  );
 }
 
   // Get one
