@@ -15,7 +15,13 @@
 //     opacity: 0;
 // }
 .board-column {
-  width: 300px;;
+    width: 300px;
+    flex: 1;
+    margin-top: 30px;
+    min-width: 0;
+    background: #eeeeee;
+    border-radius: 12px;
+    padding: 16px;
 }
 .task-list {
   min-height: 300px;
@@ -41,11 +47,10 @@
 }
 
 .kanban-board {
-    display: flex;
     gap: 20px;
     padding: 30px;
     background: #f5f5f7;
-    min-height: calc(100vh - 80px);
+    min-height: calc(100vh - 60px);
     box-sizing: border-box;
 }
 
@@ -55,6 +60,10 @@
     background: #eeeeee;
     border-radius: 12px;
     padding: 16px;
+}
+.kanban-columns {
+    display: flex;
+    gap: 20px;
 }
 
 .column-header {
@@ -219,3 +228,6 @@
 
     transform: rotate(2deg);
 }
+// .filters-search {
+//     margin-bottom: 0px;
+// }

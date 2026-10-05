@@ -4,9 +4,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { TicketService } from '../services/ticket.service';
 import { Component, OnInit } from '@angular/core';
 import { TicketResponse } from '../model/ticket.model';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @Component({
-  imports: [MatSidenavModule , MatListModule, CdkDrag, CdkDropList],
+  imports: [MatButtonToggleModule, MatSidenavModule , MatListModule, CdkDrag, CdkDropList],
   selector: 'app-kanban',
   styleUrl: './kanban.scss',
   templateUrl: './kanban.html',

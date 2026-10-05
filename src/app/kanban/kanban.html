@@ -1,175 +1,180 @@
 <div class="kanban-board">
+    <div class="filters-search">
+            <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                    <mat-button-toggle value="all tickets">All</mat-button-toggle>
+                    <mat-button-toggle value="italic">My Tickets</mat-button-toggle>
+                    <mat-button-toggle value="underline">High Priority</mat-button-toggle>
+            </mat-button-toggle-group>
 
     <!-- ==================== TO DO ==================== -->
+    <div class="kanban-columns">
+        <div class="board-column">
+            <div class="column-header">
+                <h2>To Do</h2>
+                <span class="task-count">{{ todo.length }}</span>
+            </div>
+            
 
-    <div class="board-column">
+            <div 
+                cdkDropList
+                class="task-list"
+                #todoList="cdkDropList"
+                [cdkDropListData]="todo"
+                [cdkDropListConnectedTo]="[inProgressList, finishedList]"
+                (cdkDropListDropped)="drop($event)">
 
-        <div class="column-header">
-            <h2>To Do</h2>
-            <span class="task-count">{{ todo.length }}</span>
+                @for (item of todo; track item) {
+                    <div cdkDrag class="task-card" style="opacity: 1 !important; visibility: visible !important;">
+                        <div class="task-card-top">
+
+                            <div class="task-title">
+                                {{ item.title }}
+                            </div>
+
+                            <div class="task-priority">
+                                {{ item.ticketPriority }}
+                            </div>
+
+                        </div>
+
+                        <div class="task-description">
+                            {{ item.description }}
+                        </div>
+
+                        <div class="task-card-bottom">
+
+                            <div class="task-assignee">
+                                {{ item.createdBy }}
+                            </div>
+
+                            <div class="task-date">
+                                {{ item.createdAt }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                }
+
+            </div>
+
         </div>
-        
 
-        <div
-            cdkDropList
-            class="task-list"
-            #todoList="cdkDropList"
-            [cdkDropListData]="todo"
-            [cdkDropListConnectedTo]="[inProgressList, finishedList]"
-            (cdkDropListDropped)="drop($event)">
 
-            @for (item of todo; track item) {
+        <!-- ==================== IN PROGRESS ==================== -->
 
-                <div cdkDrag class="task-card" style="opacity: 1 !important; visibility: visible !important;">
+        <div class="board-column">
 
-                    <div class="task-card-top">
+            <div class="column-header">
+                <h2>In Progress</h2>
+                <span class="task-count">{{ inProgress.length }}</span>
+            </div>
 
-                        <div class="task-title">
-                            {{ item.title }}
+            <div
+                cdkDropList
+                class="task-list"
+                #inProgressList="cdkDropList"
+                [cdkDropListData]="inProgress"
+                [cdkDropListConnectedTo]="[todoList, finishedList]"
+                (cdkDropListDropped)="drop($event)">
+
+                @for (item of inProgress; track item) {
+
+                    <div cdkDrag class="task-card" style="opacity: 1 !important; visibility: visible !important;">
+
+                        <div class="task-card-top">
+
+                            <div class="task-title">
+                                {{ item.title }}
+                            </div>
+
+                            <div class="task-priority">
+                                {{ item.ticketPriority }}
+                            </div>
+
                         </div>
 
-                        <div class="task-priority">
-                            {{ item.ticketPriority }}
+                        <div class="task-description">
+                            {{ item.description }}
+                        </div>
+
+                        <div class="task-card-bottom">
+
+                            <div class="task-assignee">
+                                {{ item.createdBy }}
+                            </div>
+
+                            <div class="task-date">
+                                {{ item.createdAt }}
+                            </div>
+
                         </div>
 
                     </div>
 
-                    <div class="task-description">
-                        {{ item.description }}
-                    </div>
+                }
 
-                    <div class="task-card-bottom">
+            </div>
 
-                        <div class="task-assignee">
-                            {{ item.createdBy }}
+        </div>
+
+
+        <!-- ==================== FINISHED ==================== -->
+
+        <div class="board-column">
+
+            <div class="column-header">
+                <h2>Finished</h2>
+                <span class="task-count">{{ finished.length }}</span>
+            </div>
+
+            <div
+                cdkDropList
+                class="task-list"
+                #finishedList="cdkDropList"
+                [cdkDropListData]="finished"
+                [cdkDropListConnectedTo]="[todoList, inProgressList]"
+                (cdkDropListDropped)="drop($event)"
+            >
+
+                @for (item of finished; track item) {
+
+                    <div cdkDrag class="task-card" style="opacity: 1 !important; visibility: visible !important;">
+
+                        <div class="task-card-top">
+
+                            <div class="task-title">
+                                {{ item.title }}
+                            </div>
+
+                            <div class="task-priority">
+                                {{ item.ticketPriority }}
+                            </div>
+
                         </div>
 
-                        <div class="task-date">
-                            {{ item.createdAt }}
+                        <div class="task-description">
+                            {{ item.description }}
+                        </div>
+
+                        <div class="task-card-bottom">
+
+                            <div class="task-assignee">
+                                {{ item.createdBy }}
+                            </div>
+
+                            <div class="task-date">
+                                {{ item.createdAt }}
+                            </div>
+
                         </div>
 
                     </div>
 
+                }
                 </div>
-
-            }
-
         </div>
-
-    </div>
-
-
-    <!-- ==================== IN PROGRESS ==================== -->
-
-    <div class="board-column">
-
-        <div class="column-header">
-            <h2>In Progress</h2>
-            <span class="task-count">{{ inProgress.length }}</span>
-        </div>
-
-        <div
-            cdkDropList
-            class="task-list"
-            #inProgressList="cdkDropList"
-            [cdkDropListData]="inProgress"
-            [cdkDropListConnectedTo]="[todoList, finishedList]"
-            (cdkDropListDropped)="drop($event)">
-
-            @for (item of inProgress; track item) {
-
-                <div cdkDrag class="task-card" style="opacity: 1 !important; visibility: visible !important;">
-
-                    <div class="task-card-top">
-
-                        <div class="task-title">
-                            {{ item.title }}
-                        </div>
-
-                        <div class="task-priority">
-                            {{ item.ticketPriority }}
-                        </div>
-
-                    </div>
-
-                    <div class="task-description">
-                        {{ item.description }}
-                    </div>
-
-                    <div class="task-card-bottom">
-
-                        <div class="task-assignee">
-                            {{ item.createdBy }}
-                        </div>
-
-                        <div class="task-date">
-                            {{ item.createdAt }}
-                        </div>
-
-                    </div>
-
-                </div>
-
-            }
-
-        </div>
-
-    </div>
-
-
-    <!-- ==================== FINISHED ==================== -->
-
-    <div class="board-column">
-
-        <div class="column-header">
-            <h2>Finished</h2>
-            <span class="task-count">{{ finished.length }}</span>
-        </div>
-
-        <div
-            cdkDropList
-            class="task-list"
-            #finishedList="cdkDropList"
-            [cdkDropListData]="finished"
-            [cdkDropListConnectedTo]="[todoList, inProgressList]"
-            (cdkDropListDropped)="drop($event)"
-        >
-
-            @for (item of finished; track item) {
-
-                <div cdkDrag class="task-card" style="opacity: 1 !important; visibility: visible !important;">
-
-                    <div class="task-card-top">
-
-                        <div class="task-title">
-                            {{ item.title }}
-                        </div>
-
-                        <div class="task-priority">
-                            {{ item.ticketPriority }}
-                        </div>
-
-                    </div>
-
-                    <div class="task-description">
-                        {{ item.description }}
-                    </div>
-
-                    <div class="task-card-bottom">
-
-                        <div class="task-assignee">
-                            {{ item.createdBy }}
-                        </div>
-
-                        <div class="task-date">
-                            {{ item.createdAt }}
-                        </div>
-
-                    </div>
-
-                </div>
-
-            }
 
         </div>
 
