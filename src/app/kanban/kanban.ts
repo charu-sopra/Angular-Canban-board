@@ -23,14 +23,13 @@ export class Kanban implements OnInit {
   ngOnInit() {
   this.ticketService.getTickets().subscribe(response => {
 
-    for (let ticket of response) {
 
-      console.log(
-        'Checking:',
-        ticket.id,
-        ticket.title,
-        ticket.ticketStatus
-      );
+    console.log('FULL RESPONSE:', response);
+    console.log('TICKETS:', response.content);
+    console.log('NUMBER OF TICKETS:', response.content.length);
+    for (let ticket of response.content) {
+
+    
 
       if (ticket.ticketStatus === 'OPEN') {
 
@@ -65,57 +64,63 @@ export class Kanban implements OnInit {
 }
 
 
-drop(event: CdkDragDrop<any[]>) {
-  if (event.previousContainer === event.container){
-    moveItemInArray(
-      event.container.data, // "Which array are we modifying?"
-      event.previousIndex, //"Where was the item?"
-      event.currentIndex   //Where should it go?"
-    );
+drop(event: CdkDragDrop<any[]>) 
+  {
+    if (event.previousContainer === event.container){
+      moveItemInArray(
+        event.container.data, // "Which array are we modifying?"
+        event.previousIndex, //"Where was the item?"
+        event.currentIndex   //Where should it go?"
+      );
+    }
+    else
+      {
+      //if moved to another column
+        transferArrayItem(
+          event.previousContainer.data, //from where youre moving it
+          event.container.data, //where it is being brought
+          event.previousIndex,  //idx of where it was
+          event.currentIndex   //idx of where its brought now
+        );
+
+        const ticket = event.container.data[event.currentIndex];
+        let newStatus: string;
+          if (event.container.data === this.todo) {
+            newStatus = 'OPEN';
+          }
+          else if (event.container.data === this.inProgress) {
+            newStatus = 'IN_PROGRESS';
+          }
+          else {
+            newStatus = 'RESOLVED';
+          }
+        // Update the ticket's status in Angular
+        ticket.ticketStatus = newStatus;
+        // Update the ticket in the backend
+        this.ticketService.updateTicket(ticket.id, 
+          {
+            title: ticket.title,
+            description: ticket.description,
+            ticketPriority: ticket.ticketPriority,
+            ticketStatus: newStatus
+          })
+          .subscribe(
+            {
+                next: (response) => {
+                  console.log('Ticket status updated successfully:', response);
+                },
+
+                error: (error) => {
+                  console.error('Failed to update ticket status:', error);
+                }
+
+          }
+        );
+
+      }
+
   }
-  else{
-    //if moved to another column
-    transferArrayItem(
-      event.previousContainer.data, //from where youre moving it
-      event.container.data, //where it is being brought
-      event.previousIndex,  //idx of where it was
-      event.currentIndex   //idx of where its brought now
-    );
-    const ticket = event.container.data[event.currentIndex];
-    let newStatus: string;
-    if (event.container.data === this.todo) {
-      newStatus = 'OPEN';
-    }
-    else if (event.container.data === this.inProgress) {
-      newStatus = 'IN_PROGRESS';
-    }
-    else {
-      newStatus = 'RESOLVED';
-    }
-    // Update the ticket's status in Angular
-    ticket.ticketStatus = newStatus;
-    // Update the ticket in the backend
-  this.ticketService.updateTicket(ticket.id, {
-    title: ticket.title,
-    description: ticket.description,
-    ticketPriority: ticket.ticketPriority,
-    ticketStatus: newStatus
-  }).subscribe({
-
-    next: (response) => {
-      console.log('Ticket status updated successfully:', response);
-    },
-
-    error: (error) => {
-      console.error('Failed to update ticket status:', error);
-    }
-
-  });
-
 }
-
-}
-  }
 
   // drop(event: CdkDragDrop<string[]>) {
   //   moveItemInArray(this.movies, event.previousIndex, event.currentIndex);

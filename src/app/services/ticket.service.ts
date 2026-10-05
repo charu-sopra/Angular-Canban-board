@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
-import { TicketRequest, TicketResponse } from '../model/ticket.model';
+import { TicketPageResponse, TicketRequest, TicketResponse } from '../model/ticket.model';
 
 @Service()
 export class TicketService {
@@ -13,7 +13,8 @@ export class TicketService {
   }
 
   // Get all
-  getTickets() {return this.http.get<TicketResponse[]>(this.apiUrl);}
+  getTickets() {  return this.http.get<TicketPageResponse>(this.apiUrl);
+}
 
   // Get one
   getTicketById(id: number) {

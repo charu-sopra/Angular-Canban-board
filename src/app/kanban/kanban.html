@@ -8,6 +8,7 @@
             <h2>To Do</h2>
             <span class="task-count">{{ todo.length }}</span>
         </div>
+        
 
         <div
             cdkDropList
@@ -15,12 +16,11 @@
             #todoList="cdkDropList"
             [cdkDropListData]="todo"
             [cdkDropListConnectedTo]="[inProgressList, finishedList]"
-            (cdkDropListDropped)="drop($event)"
-        >
+            (cdkDropListDropped)="drop($event)">
 
             @for (item of todo; track item) {
 
-                <div cdkDrag class="task-card">
+                <div cdkDrag class="task-card" style="opacity: 1 !important; visibility: visible !important;">
 
                     <div class="task-card-top">
 
@@ -74,12 +74,11 @@
             #inProgressList="cdkDropList"
             [cdkDropListData]="inProgress"
             [cdkDropListConnectedTo]="[todoList, finishedList]"
-            (cdkDropListDropped)="drop($event)"
-        >
+            (cdkDropListDropped)="drop($event)">
 
             @for (item of inProgress; track item) {
 
-                <div cdkDrag class="task-card">
+                <div cdkDrag class="task-card" style="opacity: 1 !important; visibility: visible !important;">
 
                     <div class="task-card-top">
 
@@ -138,7 +137,7 @@
 
             @for (item of finished; track item) {
 
-                <div cdkDrag class="task-card">
+                <div cdkDrag class="task-card" style="opacity: 1 !important; visibility: visible !important;">
 
                     <div class="task-card-top">
 
