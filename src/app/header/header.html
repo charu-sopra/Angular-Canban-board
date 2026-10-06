@@ -8,7 +8,9 @@
       <img src="SOPRASTERIA_logo_RVB_exe.png" alt="Sopra Steria">
     </a>
 
+    @if (!isAuthPage) {
     <div class="header__ticket-search">
+      <form class="ticket-search-form" (submit)="submitSearch($event)">
       <label class="visually-hidden" for="ticket-search">Search tickets</label>
       <input
         id="ticket-search"
@@ -18,10 +20,18 @@
         [value]="searchQuery"
         (input)="onSearchInput($event)"
         (keydown.escape)="clearSearch()"
-        aria-controls="ticket-search-results"
-        [attr.aria-expanded]="!!searchQuery">
+        aria-controls="ticket-search-results">
+      <button
+        class="ticket-search-submit"
+        type="submit"
+        aria-label="Search tickets"
+        title="Search tickets"
+        [disabled]="isLoadingTickets">
+        <mat-icon aria-hidden="true">search</mat-icon>
+      </button>
+      </form>
 
-            @if (searchQuery) {
+      @if (hasSubmittedSearch) {
         <section
           id="ticket-search-results"
           class="search-results"
@@ -96,6 +106,7 @@
         </section>
       }
     </div>
+    }
 
     <a matButton routerLink="/login" class="primary-menu__login">Log In</a>
   </div>

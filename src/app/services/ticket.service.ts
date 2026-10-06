@@ -1,11 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { TicketPageResponse, TicketRequest, TicketResponse } from '../model/ticket.model';
 
 @Service()
 export class TicketService {
     private http = inject(HttpClient);
     apiUrl = "http://localhost:8080/tickets";
+    private readonly searchResultsSubject = new BehaviorSubject<TicketResponse[] | null>(null);
+    readonly searchResults$ = this.searchResultsSubject.asObservable();
+
+    setSearchResults(tickets: TicketResponse[] | null): void {
+      this.searchResultsSubject.next(tickets);
+    }
 
     // Create
   createTicket(ticket: TicketRequest) {

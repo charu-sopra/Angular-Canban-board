@@ -2,9 +2,10 @@ import { CdkDrag, CdkDropList, CdkDropListGroup, CdkDragDrop, moveItemInArray, t
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { TicketService } from '../services/ticket.service';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { TicketResponse } from '../model/ticket.model';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   imports: [MatButtonToggleModule, MatSidenavModule , MatListModule, CdkDrag, CdkDropList],
@@ -18,50 +19,39 @@ export class Kanban implements OnInit {
  todo: TicketResponse[] = [];  
   inProgress: TicketResponse[] = [];
   finished: TicketResponse[] = []; 
+  private allTickets: TicketResponse[] = [];
+  private activeSearchResults: TicketResponse[] | null = null;
+  private destroyRef = inject(DestroyRef);
 
-  constructor(private ticketService: TicketService) {}
+  constructor(
+    private ticketService: TicketService,
+    private changeDetector: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-  this.ticketService.getTickets().subscribe(response => {
+    this.ticketService.searchResults$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((results) => {
+        this.activeSearchResults = results;
+        this.setTickets(results ?? this.allTickets);
+      });
 
+    this.ticketService.getTickets().subscribe((response) => {
+      this.allTickets = response.content;
 
-    console.log('FULL RESPONSE:', response);
-    console.log('TICKETS:', response.content);
-    console.log('NUMBER OF TICKETS:', response.content.length);
-    for (let ticket of response.content) {
-
-    
-
-      if (ticket.ticketStatus === 'OPEN') {
-
-        this.todo.push(ticket);
-
-        console.log('→ Added to TODO:', ticket.id);
-
+      if (this.activeSearchResults === null) {
+        this.setTickets(this.allTickets);
       }
-      else if (ticket.ticketStatus === 'IN_PROGRESS') {
+    });
+  }
 
-        this.inProgress.push(ticket);
-
-        console.log('→ Added to IN PROGRESS:', ticket.id);
-
-      }
-      else if (
-        ticket.ticketStatus === 'RESOLVED' ||
-        ticket.ticketStatus === 'CLOSED'
-      ) {
-
-        this.finished.push(ticket);
-
-        console.log('→ Added to FINISHED:', ticket.id);
-
-      }
-    }
-
-    console.log('TODO:', this.todo);
-    console.log('IN PROGRESS:', this.inProgress);
-    console.log('FINISHED:', this.finished);
-  });
+  private setTickets(tickets: TicketResponse[]): void {
+    this.todo = tickets.filter((ticket) => ticket.ticketStatus === 'OPEN');
+    this.inProgress = tickets.filter((ticket) => ticket.ticketStatus === 'IN_PROGRESS');
+    this.finished = tickets.filter((ticket) =>
+      ticket.ticketStatus === 'RESOLVED' || ticket.ticketStatus === 'CLOSED'
+    );
+    this.changeDetector.markForCheck();
 }
 
 
