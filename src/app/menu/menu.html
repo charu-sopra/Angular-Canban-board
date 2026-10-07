@@ -1,0 +1,122 @@
+<!-- ==================== MENU BUTTON ==================== -->
+
+<button
+  mat-icon-button
+  class="menu-button"
+  (click)="toggleMenu()"
+  aria-label="Open menu">
+
+  <mat-icon>menu</mat-icon>
+
+</button>
+
+
+<!-- ==================== RIGHT SIDEBAR ==================== -->
+
+@if (isOpen) {
+
+  <aside class="sidebar">
+
+    <!-- CLOSE BUTTON -->
+
+    <button
+      mat-icon-button
+      class="close-button"
+      (click)="toggleMenu()"
+      aria-label="Close menu">
+
+      <mat-icon>close</mat-icon>
+
+    </button>
+
+
+
+
+
+    <!-- ==================== WORKSPACE ==================== -->
+
+    <div class="menu-section lower-section">
+
+      <!-- PROFILE -->
+
+      <a
+        routerLink="/profile"
+        routerLinkActive="active"
+        class="sidenav-link">
+
+        <mat-icon>
+          person
+        </mat-icon>
+
+        <span>
+          Profile
+        </span>
+
+      </a>
+
+
+      <!-- SETTINGS -->
+
+      <a
+        routerLink="/settings"
+        routerLinkActive="active"
+        class="sidenav-link">
+
+        <mat-icon>
+          settings
+        </mat-icon>
+
+        <span>
+          Settings
+        </span>
+
+      </a>
+
+
+      <!-- LOGOUT -->
+
+      <button
+        type="button"
+        class="sidenav-link logout-button"
+        (click)="logout()">
+
+        <mat-icon>
+          logout
+        </mat-icon>
+
+        <span>
+          Logout
+        </span>
+
+      </button>
+
+    </div>
+
+<!-- 
+    ==================== USER ==================== -->
+
+    <div class="sidebar-user">
+
+      <div class="user-avatar">
+        0
+      </div>
+
+      <div class="user-details">
+
+        <span class="user-name">
+        </span>
+
+        <span class="user-role">
+        </span>
+
+      </div>
+
+      <span class="user-more">
+        •••
+      </span>
+
+    </div>
+
+  </aside>
+
+}

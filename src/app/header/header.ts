@@ -6,9 +6,11 @@ import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TicketResponse } from '../model/ticket.model';
 import { TicketService } from '../services/ticket.service';
+import { AuthService } from '../services/auth.service';
+import { Menu } from '../menu/menu';
 
 @Component({
-  imports: [MatButtonModule, MatIconModule, RouterLink],
+  imports: [MatButtonModule, MatIconModule, RouterLink, Menu],
   selector: 'app-header',
   styleUrl: './header.scss',
   templateUrl: './header.html',
@@ -24,13 +26,15 @@ export class Header {
   searchError = false;
   hasSubmittedSearch = false;
   isAuthPage = false;
+  isAuthenticated = false;
   private searchRequestId = 0;
   private destroyRef = inject(DestroyRef);
 
   constructor(
     private ticketService: TicketService,
     private changeDetector: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.updateAuthPage(this.router.url);
 
@@ -48,6 +52,8 @@ export class Header {
   private updateAuthPage(url: string): void {
     const path = url.split(/[?#]/, 1)[0];
     this.isAuthPage = path === '/login' || path === '/signup';
+    this.isAuthenticated = this.authService.isAuthenticated();
+
 
     if (this.isAuthPage && this.searchQuery) {
       this.clearSearch();

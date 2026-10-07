@@ -1,0 +1,12 @@
+<div class="profile">
+
+  <h2>My Profile</h2>
+
+  @if (user) {
+    <p><strong>Name:</strong> {{ user.name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>User ID:</strong> {{ user.id }}</p>
+    <p><strong>Created At:</strong> {{ user.createdAt }}</p>
+  }
+
+</div>

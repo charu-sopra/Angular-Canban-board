@@ -1,0 +1,399 @@
+/* =========================================================
+   MENU / APPLICATION LAYOUT
+   ========================================================= */
+
+:host {
+    display: block;
+
+    --page-background: #f7f7f9;
+    --sidebar-background: #f3f2f6;
+
+    --text-primary: #29292f;
+    --text-secondary: #696972;
+    --text-muted: #9b9ba5;
+
+    --border: #e8e8ed;
+}
+
+
+/* =========================================================
+   MENU BUTTON
+   ========================================================= */
+
+.menu-button {
+    position: absolute;
+
+    top: 50%;
+    right: 20px;
+
+    transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    color: var(--text-secondary);
+
+    cursor: pointer;
+
+    z-index: 1001;
+}
+
+.menu-button:hover {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar {
+    position: fixed;
+
+    /*
+       Header = 80px
+       Sidebar starts BELOW the header
+    */
+
+    top: 80px;
+    right: 0;
+    bottom: 0;
+
+    width: 280px;
+
+    padding: 22px 12px 14px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+
+    background: var(--sidebar-background);
+
+    border-left: 1px solid rgba(0, 0, 0, 0.035);
+
+    box-shadow: -4px 0 15px rgba(35, 35, 45, 0.06);
+
+    overflow: hidden;
+
+    z-index: 1000;
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+   ========================================================= */
+
+.close-button {
+    align-self: flex-start;
+
+    margin: 0 0 18px 5px;
+
+    color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   MENU
+   ========================================================= */
+
+.menu-section {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+/* =========================================================
+   SECTION LABEL
+   ========================================================= */
+
+.section-label {
+    padding: 0 12px;
+
+    margin-bottom: 7px;
+
+    color: #58585e;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.05em;
+}
+
+
+/* =========================================================
+   SIDEBAR ITEMS
+   ========================================================= */
+
+.sidenav-link {
+    height: 42px;
+    min-height: 42px;
+
+    margin: 1px 0;
+
+    padding: 0 12px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: transparent;
+
+    color: var(--text-secondary);
+
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background 160ms ease,
+        color 160ms ease,
+        transform 160ms ease;
+}
+
+
+/* =========================================================
+   SVG ICONS
+   ========================================================= */
+
+.sidenav-link svg {
+    flex-shrink: 0;
+
+    width: 17px;
+    height: 17px;
+
+    color: #7f7f89;
+
+    transition:
+        color 160ms ease,
+        transform 160ms ease;
+}
+
+
+/* =========================================================
+   MATERIAL ICONS
+   ========================================================= */
+
+.sidenav-link mat-icon {
+    flex-shrink: 0;
+
+    width: 17px;
+    height: 17px;
+
+    font-size: 17px;
+
+    color: #7f7f89;
+
+    transition:
+        color 160ms ease,
+        transform 160ms ease;
+}
+
+
+/* =========================================================
+   MENU TEXT
+   ========================================================= */
+
+.sidenav-link span {
+    color: inherit;
+
+    font-size: 16px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   HOVER
+   ========================================================= */
+
+.sidenav-link:hover {
+    background: rgba(255, 255, 255, 0.62);
+
+    color: var(--text-primary);
+}
+
+
+.sidenav-link:hover svg {
+    color: #6661b8;
+
+    transform: scale(1.04);
+}
+
+
+.sidenav-link:hover mat-icon {
+    color: #6661b8;
+
+    transform: scale(1.04);
+}
+
+
+/* =========================================================
+   ACTIVE ITEM
+   ========================================================= */
+
+.sidenav-link.active {
+    background: #ffffff;
+
+    color: #29292f;
+
+    box-shadow:
+        0 3px 12px rgba(35, 35, 45, 0.045);
+}
+
+
+.sidenav-link.active svg {
+    color: #625cb9;
+}
+
+
+.sidenav-link.active mat-icon {
+    color: #625cb9;
+}
+
+
+/* =========================================================
+   LOWER SECTION
+   ========================================================= */
+
+.lower-section {
+    margin-top: 30px;
+}
+
+
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+
+.logout-button {
+    width: 100%;
+
+    text-align: left;
+
+    appearance: none;
+}
+
+
+/* =========================================================
+   USER AREA
+   ========================================================= */
+
+.sidebar-user {
+    margin-top: auto;
+
+    padding: 14px 8px 4px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    border-top: 1px solid rgba(0, 0, 0, 0.045);
+}
+
+
+/* =========================================================
+   USER AVATAR
+   ========================================================= */
+
+.user-avatar {
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #dddaf3;
+
+    color: #5e5a91;
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   USER DETAILS
+   ========================================================= */
+
+.user-details {
+    min-width: 0;
+
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+
+.user-name {
+    color: #29292e;
+
+    font-size: 15px;
+    font-weight: 650;
+}
+
+
+.user-role {
+    color: #9b9ba5;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   USER MORE
+   ========================================================= */
+
+.user-more {
+    color: #9999a2;
+
+    font-size: 13px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .sidebar {
+        width: 250px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .sidebar {
+        width: 220px;
+    }
+
+}
