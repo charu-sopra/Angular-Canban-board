@@ -1,260 +1,663 @@
+/* =========================================================
+   KANBAN PAGE
+   ========================================================= */
 
-[cdkDropListGroup] {
-  display: flex;
-  gap: 20px;
+:host {
+    display: block;
 
-  margin-top: 80px;
-  
+    --page-background: #f7f7f9;
+    --surface: #ffffff;
+
+    --text-primary: #29292f;
+    --text-secondary: #73737d;
+    --text-muted: #a0a0aa;
+
+    --border: #e9e9ed;
+
+    /* Pastel status colours */
+    --todo-background: #eef0ff;
+    --progress-background: #fff0e8;
+    --finished-background: #e9f8f1;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "Segoe UI",
+        sans-serif;
 }
 
 
-.cdk-drag-animating {
-    transition: transform 250ms ease;
-}
-// .cdk-drag-placeholder {
-//     opacity: 0;
-// }
-.board-column {
-    width: 300px;
-    flex: 1;
-    margin-top: 30px;
-    min-width: 0;
-    background: #eeeeee;
-    border-radius: 12px;
-    padding: 16px;
-}
-.task-list {
-  min-height: 300px;
-  background: #f4f4f4;
-  padding: 12px;
-  border-radius: 8px;
-}
-
-.sidenav-container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #eee;
-  height: 100vh;
-  width: 100%;
-//   width: 180px;
-}
-
-.sidebar {
-    width: 180px;
-}
+/* =========================================================
+   MAIN KANBAN CONTAINER
+   ========================================================= */
 
 .kanban-board {
-    gap: 20px;
-    padding: 30px;
-    background: #f5f5f7;
-    min-height: calc(100vh - 60px);
+    min-height: calc(100vh - 80px);
+
+    padding: 28px 32px 40px;
+
+    background: var(--page-background);
+
     box-sizing: border-box;
 }
 
-.board-column {
-    flex: 1;
-    min-width: 0;
-    background: #eeeeee;
-    border-radius: 12px;
-    padding: 16px;
-}
-.kanban-columns {
+
+/* =========================================================
+   TOP FILTER AREA
+   ========================================================= */
+
+.filters-search {
     display: flex;
-    gap: 20px;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 28px;
 }
+
+
+/* =========================================================
+   TOGGLE
+   ========================================================= */
+
+.toggles {
+    display: flex;
+    align-items: center;
+}
+
+
+.ticket-toggle {
+    height: 40px;
+
+    padding: 3px;
+
+    background: #ffffff;
+
+    border: 1px solid var(--border);
+
+    border-radius: 13px;
+
+    box-shadow:
+        0 2px 8px rgba(40, 40, 50, 0.035);
+
+    overflow: hidden;
+}
+
+
+/*
+    Angular Material normally gives button toggles
+    their own borders.
+
+    We remove those so the whole thing looks like
+    one iOS-style segmented control.
+*/
+
+.ticket-toggle mat-button-toggle {
+    min-width: 80px;
+
+    height: 32px;
+
+    border: none !important;
+
+    border-radius: 9px !important;
+
+    // color: var(--text-muted);
+
+    font-size: 15px;
+    font-weight: 500;
+
+    transition:
+        background 160ms ease,
+        color 160ms ease;
+}
+
+
+/* Selected toggle */
+
+// .ticket-toggle mat-button-toggle-checked {
+//     background: #eeedff;
+
+//     color: #5e58b5;
+// }
+
+
+/* =========================================================
+   CREATE BUTTON
+   ========================================================= */
+
+.create-ticket-button {
+    height: 40px;
+
+    padding: 0 17px;
+
+    border: none !important;
+
+    border-radius: 12px !important;
+
+    background: #29292f !important;
+
+    color: #ffffff !important;
+
+    font-family: inherit;
+
+    font-size: 15px;
+    font-weight: 550;
+
+    box-shadow:
+        0 5px 14px rgba(35, 35, 40, 0.12);
+
+    transition:
+        transform 150ms ease,
+        box-shadow 150ms ease;
+}
+
+
+.create-ticket-button:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 7px 18px rgba(35, 35, 40, 0.16);
+}
+
+
+.create-ticket-button:active {
+    transform: translateY(0);
+}
+
+
+.plus-icon {
+    margin-right: 5px;
+
+    font-size: 17px;
+    font-weight: 400;
+}
+
+
+/* =========================================================
+   THREE COLUMNS
+   ========================================================= */
+
+.kanban-columns {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+
+    align-items: start;
+}
+
+
+/* =========================================================
+   BOARD COLUMN
+   ========================================================= */
+
+.board-column {
+    min-width: 0;
+
+    min-height: 570px;
+
+    padding: 16px;
+
+    border-radius: 20px;
+
+    box-sizing: border-box;
+
+    border: 1px solid rgba(255, 255, 255, 0.75);
+}
+
+
+/* =========================================================
+   PASTEL STATUS BACKGROUNDS
+   ========================================================= */
+
+.todo-column {
+    background: var(--todo-background);
+}
+
+
+.progress-column {
+    background: var(--progress-background);
+}
+
+
+.finished-column {
+    background: var(--finished-background);
+}
+
+
+/* =========================================================
+   COLUMN HEADER
+   ========================================================= */
 
 .column-header {
     display: flex;
+
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 16px;
+
+    margin-bottom: 14px;
+
+    min-height: 30px;
 }
+
+
+.column-title-wrapper {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
 
 .column-header h2 {
     margin: 0;
+
+    color: var(--text-primary);
+
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 650;
+
+    letter-spacing: -0.01em;
 }
 
-.task-count {
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
-    width: 28px;
-    height: 28px;
+/* =========================================================
+   STATUS DOT
+   ========================================================= */
+
+.status-dot {
+    width: 8px;
+    height: 8px;
 
     border-radius: 50%;
 
-    background: white;
+    background: #716bc7;
+}
+
+
+.progress-column .status-dot {
+    background: #d69570;
+}
+
+
+.finished-column .status-dot {
+    background: #62a98c;
+}
+
+
+/* =========================================================
+   TASK COUNT
+   ========================================================= */
+
+.task-count {
+    min-width: 22px;
+    height: 21px;
+
+    padding: 0 6px;
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 20px;
+
+    background: rgba(255, 255, 255, 0.62);
+
+    color: #47474e;
 
     font-size: 13px;
     font-weight: 600;
 }
 
+
+/* =========================================================
+   COLUMN MORE BUTTON
+   ========================================================= */
+
+.column-more {
+    width: 28px;
+    height: 28px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: rgba(255, 255, 255, 0.50);
+
+    color: #424247;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    letter-spacing: 1px;
+}
+
+
+.column-more:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+
+/* =========================================================
+   DROP ZONE
+   ========================================================= */
+
 .task-list {
-    min-height: 200px;
+    min-height: 480px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    border-radius: 14px;
+
+    transition:
+        background 160ms ease;
 }
+
+
+/*
+    This is what the empty drop area feels like.
+    We don't make it strongly visible.
+*/
+
+.task-list.cdk-drop-list-dragging {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+
+/* =========================================================
+   TASK CARD
+   ========================================================= */
+
 .task-card {
-    background: #ffffff;
+    padding: 15px;
 
-  border: 1px solid #e2e2e2;
-  border-radius: 12px;
+    border-radius: 16px;
 
-  padding: 16px;
+    background: rgba(255, 255, 255, 0.90);
 
-  margin-bottom: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.80);
 
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
 
-  cursor: grab;
+    box-shadow:
+        0 4px 14px rgba(40, 40, 60, 0.055);
 
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+    cursor: grab;
 
+    transition:
+        transform 160ms ease,
+        box-shadow 160ms ease;
 }
+
+
 .task-card:hover {
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
 
-  transform: translateY(-2px);
+    box-shadow:
+        0 8px 20px rgba(40, 40, 60, 0.085);
 }
 
-
-.task-card-top {
-
-display: flex;
-justify-content: space-between;
- align-items: flex-start;
-gap: 10px;
-margin-bottom: 12px;
-}
 
 .task-card:active {
     cursor: grabbing;
 }
 
 
-.task-priority {
-    display: inline-block;
+/* =========================================================
+   TOP OF CARD
+   ========================================================= */
 
-    font-size: 10px;
-    font-weight: 700;
+.task-card-top {
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 10px;
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.task-title {
+    min-width: 0;
+
+    color: #303037;
+
+    font-size: 16px;
+    font-weight: 650;
+
+    line-height: 1.35;
+}
+
+
+/* =========================================================
+   PRIORITY
+   ========================================================= */
+
+.task-priority {
+    flex-shrink: 0;
 
     padding: 4px 8px;
 
-    border-radius: 5px;
+    border-radius: 20px;
 
-    background: #fdecec;
-    color: #d64545;
+    background: #f1f1f4;
 
-    margin-bottom: 12px;
+    color: #4d4d53;
+
+    font-size: 12px;
+    font-weight: 650;
+
+    white-space: nowrap;
 }
 
-.task-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: #222222;
-    line-height: 1.4;
-    flex: 1;
+
+/*
+    HIGH gets a very soft peach.
+*/
+
+.task-priority {
+    &:has(+ *) {
+        /* intentionally neutral by default */
+    }
 }
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
 
 .task-description {
-  color: #8a8a8a;
+    color: #39393e;
 
-  font-size: 13px;
+    font-size: 14px;
 
-  line-height: 1.5;
+    line-height: 1.55;
 
-  margin-bottom: 16px;
+    display: -webkit-box;
 
-  display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 
-  -webkit-line-clamp: 2;
+    overflow: hidden;
 
-  -webkit-box-orient: vertical;
-
-  overflow: hidden;
+    min-height: 34px;
 }
 
 
-.task-footer {
+/* =========================================================
+   CARD FOOTER
+   ========================================================= */
+
+.task-card-bottom {
     display: flex;
+
     align-items: center;
     justify-content: space-between;
 
+    gap: 10px;
+
+    margin-top: 14px;
+
     padding-top: 10px;
 
-    border-top: 1px solid #eeeeee;
-
-    font-size: 11px;
-
-    color: #777;
+    border-top: 1px solid rgba(0, 0, 0, 0.045);
 }
 
-.assigned-to{
-  font-size: 12px;
 
-  font-weight: 500;
+/* =========================================================
+   ASSIGNED USER
+   ========================================================= */
 
-  color: #555555;
+.assigned-to {
+    max-width: 55%;
+
+    padding: 5px 9px;
+
+    border-radius: 20px;
+
+    background: #f5f5f7;
+
+    color: #666670;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
+
+
+/* =========================================================
+   DATE
+   ========================================================= */
 
 .task-date {
-  font-size: 11px;
+    color: #626268;
 
-  color: #999999;
-}
-.task-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: #2d2d2d;
+    font-size: 10px;
 
-    line-height: 1.4;
+    white-space: nowrap;
 }
 
-.task-priority {
-  padding: 4px 9px;
 
-  border-radius: 6px;
-
-  background: #fff1f1;
-
-  color: #e53935;
-
-  font-size: 11px;
-
-  font-weight: 600;
-
-  white-space: nowrap;
-}
-.task-card-bottom {
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-  padding-top: 10px;
-
-  border-top: 1px solid #eeeeee;
-}
-.cdk-drag-animating {
-    transition: transform 250ms ease;
-}
+/* =========================================================
+   DRAGGING
+   ========================================================= */
 
 .cdk-drag-preview {
     box-sizing: border-box;
-    border-radius: 10px;
+
+    border-radius: 16px;
+
+    background: #ffffff;
 
     box-shadow:
-        0 12px 25px rgba(0, 0, 0, 0.15),
-        0 4px 8px rgba(0, 0, 0, 0.08);
-
-    transform: rotate(2deg);
+        0 16px 35px rgba(35, 35, 50, 0.15);
 }
-.filters-search {
-    display: flex;
-    justify-content: space-between;
+
+
+.cdk-drag-placeholder {
+    opacity: 0.25;
+}
+
+
+.cdk-drag-animating {
+    transition:
+        transform 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+
+.task-list.cdk-drop-list-dragging
+.task-card:not(.cdk-drag-placeholder) {
+    transition:
+        transform 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .kanban-board {
+        padding: 24px;
+    }
+
+    .kanban-columns {
+        gap: 14px;
+    }
+
+    .board-column {
+        padding: 13px;
+    }
+
+}
+
+
+@media (max-width: 850px) {
+
+    .kanban-columns {
+        grid-template-columns: 1fr;
+    }
+
+    .board-column {
+        min-height: auto;
+    }
+
+    .task-list {
+        min-height: 150px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .kanban-board {
+        padding: 18px;
+    }
+
+    .filters-search {
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 12px;
+    }
+
+    .ticket-toggle {
+        width: 100%;
+    }
+
+    // .ticket-toggle mat-button-toggle {
+    //     flex: 1;
+    // }
+
+    .create-ticket-button {
+        width: 100%;
+    }
+
 }

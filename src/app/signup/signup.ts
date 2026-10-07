@@ -49,7 +49,8 @@ export class Signup {
   { value: 'APPROVER', viewValue: 'APPROVER' },
   { value: 'GUEST', viewValue: 'GUEST' }
 ];
-private logger = inject(LoggerService);
+
+  private logger = inject(LoggerService);
   constructor(
   private userService: UserService,
   private router: Router,
@@ -126,6 +127,8 @@ createUser() {
   console.log('ENCODED PASSWORD:', encodedPassword);
 
   formData.password = encodedPassword;
+
+
 
   // Send request to backend
   const request = this.userService.createUser(formData);

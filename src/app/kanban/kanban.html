@@ -1,37 +1,87 @@
 <div class="kanban-board">
+
+    <!-- ==================== TOP CONTROLS ==================== -->
+
     <div class="filters-search">
+
         <div class="toggles">
-            <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-                    <mat-button-toggle value="all tickets">All</mat-button-toggle>
-                    <mat-button-toggle value="italic">My Tickets</mat-button-toggle>
+
+            <mat-button-toggle-group
+                name="ticketFilter"
+                aria-label="Ticket Filter"
+                class="ticket-toggle">
+
+                <mat-button-toggle value="all">
+                    All
+                </mat-button-toggle>
+
+                <mat-button-toggle value="myTickets">
+                    My Tickets
+                </mat-button-toggle>
+
             </mat-button-toggle-group>
-            </div>
-            
-            <button matButton="elevated" (click)="openCreateTicketDialog()">
-                + Create
-            </button>
+
+        </div>
+
+
+        <button
+            matButton="elevated"
+            class="create-ticket-button"
+            (click)="openCreateTicketDialog()"
+        >
+            <span class="plus-icon">+</span>
+            Create
+        </button>
+
     </div>
-    
 
-    <!-- ==================== TO DO ==================== -->
+
+    <!-- ==================== KANBAN COLUMNS ==================== -->
+
     <div class="kanban-columns">
-        <div class="board-column">
-            <div class="column-header">
-                <h2>To Do</h2>
-                <span class="task-count">{{ todo.length }}</span>
-            </div>
-            
 
-            <div 
+
+        <!-- ==================== TO DO ==================== -->
+
+        <div class="board-column todo-column">
+
+            <div class="column-header">
+
+                <div class="column-title-wrapper">
+
+                    <span class="status-dot"></span>
+
+                    <h2>To Do</h2>
+
+                    <span class="task-count">
+                        {{ todo.length }}
+                    </span>
+
+                </div>
+
+                <button class="column-more">
+                    •••
+                </button>
+
+            </div>
+
+
+            <div
                 cdkDropList
                 class="task-list"
                 #todoList="cdkDropList"
                 [cdkDropListData]="todo"
                 [cdkDropListConnectedTo]="[inProgressList, finishedList]"
-                (cdkDropListDropped)="drop($event)">
+                (cdkDropListDropped)="drop($event)"
+            >
 
                 @for (item of todo; track item) {
-                    <div cdkDrag class="task-card" style="opacity: 1 !important; visibility: visible !important;">
+
+                    <div
+                        cdkDrag
+                        class="task-card"
+                    >
+
                         <div class="task-card-top">
 
                             <div class="task-title">
@@ -44,9 +94,11 @@
 
                         </div>
 
+
                         <div class="task-description">
                             {{ item.description }}
                         </div>
+
 
                         <div class="task-card-bottom">
 
@@ -69,14 +121,31 @@
         </div>
 
 
+
         <!-- ==================== IN PROGRESS ==================== -->
 
-        <div class="board-column">
+        <div class="board-column progress-column">
 
             <div class="column-header">
-                <h2>In Progress</h2>
-                <span class="task-count">{{ inProgress.length }}</span>
+
+                <div class="column-title-wrapper">
+
+                    <span class="status-dot"></span>
+
+                    <h2>In Progress</h2>
+
+                    <span class="task-count">
+                        {{ inProgress.length }}
+                    </span>
+
+                </div>
+
+                <button class="column-more">
+                    •••
+                </button>
+
             </div>
+
 
             <div
                 cdkDropList
@@ -84,11 +153,15 @@
                 #inProgressList="cdkDropList"
                 [cdkDropListData]="inProgress"
                 [cdkDropListConnectedTo]="[todoList, finishedList]"
-                (cdkDropListDropped)="drop($event)">
+                (cdkDropListDropped)="drop($event)"
+            >
 
                 @for (item of inProgress; track item) {
 
-                    <div cdkDrag class="task-card" style="opacity: 1 !important; visibility: visible !important;">
+                    <div
+                        cdkDrag
+                        class="task-card"
+                    >
 
                         <div class="task-card-top">
 
@@ -102,9 +175,11 @@
 
                         </div>
 
+
                         <div class="task-description">
                             {{ item.description }}
                         </div>
+
 
                         <div class="task-card-bottom">
 
@@ -127,14 +202,31 @@
         </div>
 
 
+
         <!-- ==================== FINISHED ==================== -->
 
-        <div class="board-column">
+        <div class="board-column finished-column">
 
             <div class="column-header">
-                <h2>Finished</h2>
-                <span class="task-count">{{ finished.length }}</span>
+
+                <div class="column-title-wrapper">
+
+                    <span class="status-dot"></span>
+
+                    <h2>Finished</h2>
+
+                    <span class="task-count">
+                        {{ finished.length }}
+                    </span>
+
+                </div>
+
+                <button class="column-more">
+                    •••
+                </button>
+
             </div>
+
 
             <div
                 cdkDropList
@@ -147,7 +239,10 @@
 
                 @for (item of finished; track item) {
 
-                    <div cdkDrag class="task-card" style="opacity: 1 !important; visibility: visible !important;">
+                    <div
+                        cdkDrag
+                        class="task-card"
+                    >
 
                         <div class="task-card-top">
 
@@ -161,9 +256,11 @@
 
                         </div>
 
+
                         <div class="task-description">
                             {{ item.description }}
                         </div>
+
 
                         <div class="task-card-bottom">
 
@@ -180,11 +277,11 @@
                     </div>
 
                 }
-                </div>
-        </div>
+
+            </div>
 
         </div>
 
-    
+    </div>
 
 </div>

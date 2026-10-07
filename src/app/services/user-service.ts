@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 export class UserService {
  
   private http = inject(HttpClient);
+  userRole = '';
   
   apiUrl = 'http://localhost:8080/signup';
   
