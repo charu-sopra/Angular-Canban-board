@@ -1,5 +1,6 @@
 import { inject, Service } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+// import { SignUpRequest } from '../model/signup-request.model';
 
 @Service()
 export class UserService {
@@ -10,12 +11,8 @@ export class UserService {
   
 
   createUser(userData: any) {
-
     console.log('USER SERVICE: createUser called');
-
     console.log('FORM DATA:', userData);
-
-
   return this.http.post(this.apiUrl,userData,{ observe: 'response' }); 
   }
 }

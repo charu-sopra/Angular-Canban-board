@@ -8,7 +8,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatStepperModule } from '@angular/material/stepper';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { LoggerService } from '../services/logger.service';
+import { LoggerService } from '../services/logger.service';import { Router } from '@angular/router';
+
 
 
 interface Role {
@@ -40,6 +41,7 @@ export class Signup {
   hideConfirmPassword = true;
   isSubmitting = false;
   successMessage = '';
+  redirectCountdown = 3;
 
     roles: Role[] = [
   { value: 'SUPERUSER', viewValue: 'SUPER USER' },
@@ -47,9 +49,11 @@ export class Signup {
   { value: 'APPROVER', viewValue: 'APPROVER' },
   { value: 'GUEST', viewValue: 'GUEST' }
 ];
-
-  private userService = inject(UserService);
-  private logger = inject(LoggerService);
+private logger = inject(LoggerService);
+  constructor(
+  private userService: UserService,
+  private router: Router,
+) {}
 
   signUpForm = new FormGroup({
 
@@ -93,18 +97,17 @@ export class Signup {
 
 
   //after user calls to create--->
-  createUser() {
-    //check if valid
-    if (this.signUpForm.invalid || this.isSubmitting) {
-      this.signUpForm.markAllAsTouched();
-      return;
-    }
+createUser() {
+  // Check if form is valid
+  if (this.signUpForm.invalid || this.isSubmitting) {
+    this.signUpForm.markAllAsTouched();
+    return;
+  }
 
-    this.isSubmitting = true;    
+  this.isSubmitting = true;
 
-
-  // get from data and transform the password
-    const formData = this.signUpForm.getRawValue();
+  // Get form data
+  const formData = this.signUpForm.getRawValue();
 
     if (!formData.password) {
       //console.error('Password is missing');
@@ -117,38 +120,44 @@ export class Signup {
     this.logger.info('Signup form submitted');
    // console.log('PASSWORD:', formData.password);
 
-    const encodedPassword = this.encodePassword(formData.password);
-    console.log('ENCODED PASSWORD:', encodedPassword);
-    formData.password = encodedPassword;
+  // Encode password
+  const encodedPassword = this.encodePassword(formData.password);
 
-    const request = this.userService.createUser(formData);
+  console.log('ENCODED PASSWORD:', encodedPassword);
 
-      request.subscribe({
-      //the Observable successfully produced a value.
-      next: 
-      //What should I do when data arrives?
-      (response) => {  console.log(response.status);
+  formData.password = encodedPassword;
 
-        if (response.status === 200) {
+  // Send request to backend
+  const request = this.userService.createUser(formData);
+  request.subscribe({
+
+    next: (response) => {
+
+          console.log('User created successfully:', response);
           this.successMessage = 'User has been successfully created.';
-        }
-        this.isSubmitting = false;
+          console.log(this.successMessage);
+          this.isSubmitting = false;
+          this.redirectCountdown = 3;
+          const countdown = setInterval(() => {
+            this.redirectCountdown--;
+            if (this.redirectCountdown === 0) {
+              clearInterval(countdown);
 
-      },
+              this.router.navigate(['/login']);
+            }
 
-      //runs if the HTTP request fails
-      error: // What should I do if something goes wrong?
-      (error)  =>  {
-        console.error('Signup failed:', error);
-      this.isSubmitting = false;},
+          }, 1000);
+        },
 
-      complete: 
-        //What should I do when the Observable has finished producing values successfully.
-      () => {
-      this.isSubmitting = false;}
-    });
-  }
+    // Runs when HTTP request fails
+    error: (error) => {
 
+      console.error('Signup failed:', error);
+
+      this.isSubmitting = false;
+    }
+  });
+}
 
 resetForm(): void {
   this.signUpForm.reset();

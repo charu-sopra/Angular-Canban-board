@@ -7,6 +7,8 @@ export interface TicketRequest {
   ticketPriority: string;
 
   ticketStatus: string;
+
+  assignedTo : string
 //we can change createdBy and updatedBy later for matching the datatype;
 //   createdBy: number;
 
@@ -25,6 +27,7 @@ export interface TicketResponse {
   createdAt: string;
   updatedBy: string | null;
   updatedAt: string | null;
+  assignedTo: string | null;
 }
 
 export interface TicketPageResponse {

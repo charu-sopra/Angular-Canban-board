@@ -1,4 +1,8 @@
+<!-- <p>TEST: {{ successMessage }}</p>
 
+@if (successMessage === 'User has been successfully created.') {
+  <p>SUCCESS IF BLOCK IS WORKING</p>
+} -->
 <form [formGroup]="signUpForm" class="my-form">
 
     <mat-stepper #stepper>
@@ -379,11 +383,19 @@
                      {{ isSubmitting ? 'Creating User...' : 'Create User' }}
                 </button>
 
-                @if (successMessage) {
-                    <div class="success-message">
-                        {{ successMessage }}
+                @if (successMessage === 'User has been successfully created.') {
+                <div class="success-message">
+                    <mat-icon>check_circle</mat-icon>
+
+                    <div class="success-content">
+                        <div>{{ successMessage }}</div>
+
+                        <div class="redirect-message">
+                            Redirecting to login in {{ redirectCountdown }}...
+                        </div>
                     </div>
-                    }
+                </div>
+                }
                 
                 <button matButton type="button" (click)="stepper.reset()"> Reset</button>
 

@@ -1,0 +1,52 @@
+/* Dialog heading */
+
+.dialog-title {
+  margin: 0;
+  padding: 20px 24px;
+
+  font-size: 22px;
+  font-weight: 600;
+
+  border-bottom: 1px solid #eeeeee;
+}
+
+
+/* Dialog content */
+
+.dialog-content {
+  padding: 24px;
+}
+
+
+/* Form */
+
+.ticket-form {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* Input fields */
+
+.input-container {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+
+/* Error messages */
+
+mat-error {
+  margin-bottom: 8px;
+}
+
+
+/* Bottom buttons */
+
+.dialog-actions {
+  padding: 16px 24px;
+
+  border-top: 1px solid #eeeeee;
+
+  gap: 8px;
+}
