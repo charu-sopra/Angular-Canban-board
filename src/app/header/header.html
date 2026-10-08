@@ -107,7 +107,13 @@
       }
     </div>
     }
-
+    @if (!isAuthenticated) {
     <a matButton routerLink="/login" class="primary-menu__login">Log In</a>
+    }
+
+    @if (isAuthenticated) {
+      <!-- <a matButton routerLink="/profile">Profile</a> -->
+       <div class="primary-menu__login"><app-menu></app-menu></div>
+    }
   </div>
 </header>

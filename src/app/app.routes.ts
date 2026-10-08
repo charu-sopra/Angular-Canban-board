@@ -5,6 +5,7 @@ import { Home } from './home/home';
 import { Dashboard } from './dashboard/dashboard';
 import { Kanban } from './kanban/kanban';
 import { Calendar } from './calendar/calendar';
+import { Profile } from './profile/profile';
 
 export const routes: Routes = [
     {
@@ -41,5 +42,9 @@ export const routes: Routes = [
         path: 'login',
         component: LoginTemp
     },
+    {
+        path: 'profile',
+        component: Profile
+    }
    
 ];
