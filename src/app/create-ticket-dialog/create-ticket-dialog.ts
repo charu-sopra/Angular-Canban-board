@@ -1,15 +1,15 @@
-import { Component, inject } from "@angular/core";
+import { Component, Inject, inject } from "@angular/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { TicketService } from "../services/ticket.service";
-import { TicketRequest } from "../model/ticket.model";
+import { TicketRequest, TicketResponse } from "../model/ticket.model";
 import {ReactiveFormsModule,FormGroup,FormControl,Validators} from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import {MatDialogTitle,MatDialogContent,MatDialogActions,MatDialogRef} from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { LoggerService } from "../services/logger.service";
-
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-ticket-dialog',
@@ -33,7 +33,7 @@ export class CreateTicketDialogComponent {
    * successfully creating the ticket.
    */
   readonly dialogRef = inject(MatDialogRef<CreateTicketDialogComponent>);
-
+   readonly ticket =inject(MAT_DIALOG_DATA) as TicketResponse | null;
   /*
    * TicketService is responsible for communicating
    * with our Spring Boot backend.
@@ -41,7 +41,8 @@ export class CreateTicketDialogComponent {
     constructor(
     private ticketService: TicketService,
     private router: Router,
-    private logger: LoggerService
+    private logger: LoggerService,
+
   ) {}
 
 
@@ -55,10 +56,14 @@ export class CreateTicketDialogComponent {
     ticketStatus: new FormControl('OPEN'),
 
     assignedTo: new FormControl('')
-  });
+
+  }
+);
+
+  
 
 
-  createTicket() {
+  public createTicket() {
 
 
     /*
@@ -89,6 +94,7 @@ export class CreateTicketDialogComponent {
       ticketStatus: this.ticketForm.value.ticketStatus ?? 'OPEN',
       assignedTo: this.ticketForm.value.assignedTo ?? ''
     };
+    console.log('TICKET BEING SENT TO BACKEND:', ticket);
 
 
     /*

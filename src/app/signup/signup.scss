@@ -76,7 +76,7 @@ mat-stepper {
 }
 
 
-
+//DO NOT USE ng-deep
 ::ng-deep .mat-step-icon-selected {
   background: $brand-gradient !important;
 }

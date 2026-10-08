@@ -138,24 +138,19 @@ export class Kanban implements OnInit {
   }
 
 
-  // Open Create Ticket dialog
-  openCreateTicketDialog() {
+  // Open Create/Edit Ticket dialog
+  openTicketDialog(ticket? : TicketResponse) {
 
-    const dialogRef = this.dialog.open(
-      CreateTicketDialogComponent,
+    const dialogRef = this.dialog.open(CreateTicketDialogComponent,
       {
         width: '650px',
-        maxWidth: '90vw'
+        maxWidth: '90vw',
+        data:ticket
       }
     );
-
-
     dialogRef.afterClosed().subscribe(result => {
-
       if (result) {
-
-        console.log('New ticket received by Kanban:',result);
-
+        console.log('Ticket received by Kanban:',result);
         this.addTicketToBoard(result);
 
       }

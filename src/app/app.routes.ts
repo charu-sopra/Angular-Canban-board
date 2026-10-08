@@ -4,6 +4,7 @@ import { Signup } from './signup/signup';
 import { Home } from './home/home';
 import { Dashboard } from './dashboard/dashboard';
 import { Kanban } from './kanban/kanban';
+import { Calendar } from './calendar/calendar';
 
 export const routes: Routes = [
     {
@@ -20,6 +21,10 @@ export const routes: Routes = [
             component: Dashboard
         },
 
+        {
+            path: 'calendar',
+            component: Calendar
+        }
     ]
     },
     
