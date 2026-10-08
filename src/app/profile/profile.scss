@@ -1,7 +1,18 @@
-.profile {
+.extra-details {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
   width: 100%;
   max-width: 650px;
   margin: 50px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.profile-details,
+.system-details {
+  width: 100%;
   padding: 32px;
   box-sizing: border-box;
 
@@ -12,17 +23,21 @@
   box-shadow: 0 8px 25px rgba(35, 35, 45, 0.08);
 }
 
-/* Page heading */
-.profile h2 {
+/* Headings */
+
+.profile-details h2,
+.system-details h2 {
   margin: 0 0 28px;
+
   color: #29292f;
   font-size: 28px;
   font-weight: 600;
-  text-align: center;
 }
 
-/* User information */
-.profile p {
+/* Information rows */
+
+.profile-details p,
+.system-details p {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -33,52 +48,20 @@
   color: #696972;
   font-size: 16px;
 
-  border-bottom: 1px solid #eeeeF2;
+  border-bottom: 1px solid #eeeef2;
 }
 
-/* Remove border from last information row */
-.profile p:last-child {
+/* Remove border from last row */
+
+.profile-details p:last-child,
+.system-details p:last-child {
   border-bottom: none;
 }
 
 /* Labels */
-.profile p strong {
+
+.profile-details p strong,
+.system-details p strong {
   color: #29292f;
   font-weight: 600;
-}
-
-/* Loading message */
-.profile p:only-child {
-  justify-content: center;
-}
-
-/* Error message */
-.profile p[role="alert"] {
-  justify-content: center;
-  color: #c62828;
-  background: #fff5f5;
-  border: 1px solid #ffd6d6;
-  border-radius: 10px;
-  padding: 14px;
-}
-
-/* Mobile */
-@media (max-width: 600px) {
-  .profile {
-    width: calc(100% - 30px);
-    margin: 30px auto;
-    padding: 24px;
-  }
-
-  .profile h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-
-  .profile p {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-    font-size: 15px;
-  }
 }

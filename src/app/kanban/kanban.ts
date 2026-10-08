@@ -6,7 +6,7 @@ import {
   transferArrayItem,
   
 } from '@angular/cdk/drag-drop';
-
+import { DatePipe } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
@@ -16,6 +16,7 @@ import {
   DestroyRef,
   inject,
   OnInit,
+  
   
 } from '@angular/core';
 
@@ -30,7 +31,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  imports: [ MatButtonToggleModule,MatSidenavModule,MatListModule,CdkDrag, CdkDropList, MatButtonModule],
+  imports: [ DatePipe, MatButtonToggleModule,MatSidenavModule,MatListModule,CdkDrag, CdkDropList, MatButtonModule],
   selector: 'app-kanban',
   styleUrl: './kanban.scss',
   templateUrl: './kanban.html',

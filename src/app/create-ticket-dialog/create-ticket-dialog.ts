@@ -55,7 +55,7 @@ export class CreateTicketDialogComponent {
 
     ticketStatus: new FormControl('OPEN'),
 
-    assignedTo: new FormControl('')
+    assignedTo: new FormControl('', [Validators.required])
 
   }
 );

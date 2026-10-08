@@ -3,8 +3,8 @@ export interface MachineDetails {
   osVersion: string;
   architecture: string;
   processors: number;
-  totalRam: number;
-  freeRam: number;
+  // totalRam: number;
+  // freeRam: number;
   totalStorage: number;
   freeStorage: number;
   javaVersion: string;
