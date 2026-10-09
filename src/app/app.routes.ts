@@ -4,7 +4,8 @@ import { Signup } from './signup/signup';
 import { Home } from './home/home';
 import { Dashboard } from './dashboard/dashboard';
 import { Kanban } from './kanban/kanban';
-import { Ticket } from './create-ticket/create-ticket';
+import { Calendar } from './calendar/calendar';
+import { Profile } from './profile/profile';
 
 export const routes: Routes = [
     {
@@ -15,13 +16,15 @@ export const routes: Routes = [
             path: '',
             component: Kanban
         },
+        
         {
             path: 'dashboard',
             component: Dashboard
         },
+
         {
-            path: 'create-ticket',
-            component: Ticket
+            path: 'calendar',
+            component: Calendar
         }
     ]
     },
@@ -40,11 +43,8 @@ export const routes: Routes = [
         component: LoginTemp
     },
     {
-    path: 'home',
-    component: Home
-    },
-    {
-    path: 'create-ticket',
-    component: Ticket
-  }
+        path: 'profile',
+        component: Profile
+    }
+   
 ];

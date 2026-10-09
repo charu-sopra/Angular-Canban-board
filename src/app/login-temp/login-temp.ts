@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { LoggerService } from '../services/logger.service';
 
 // AuthService = our own service that talks to the Spring Boot login API
 
@@ -75,7 +76,8 @@ export class LoginTemp {
 
     // Router is stored inside this component
     // so we can use:this.router.navigate(...)
-    private router: Router
+    private router: Router,
+    private logger:LoggerService
   ) {}
 
   login() {
@@ -100,7 +102,8 @@ export class LoginTemp {
 
     console.log('Email entered:', email);
 
-    console.log('Password entered:', password);
+    // console.log('Password entered:', password);
+    this.logger.info('Login attempt started');
 
 
     // The component itself does NOT make the HTTP request.
@@ -130,7 +133,7 @@ export class LoginTemp {
       
         next: (response) => {
 
-          console.log('Login successful:', response);
+          this.logger.info('Login successful');
 
           // The backend gives us a token.
           // We store that token in sessionStorage.
@@ -159,7 +162,7 @@ export class LoginTemp {
         
         error: (error: HttpErrorResponse) => {
 
-          console.log('Login failed:', error);
+          this.logger.error('Login failed', error);
 
         }
 
@@ -172,6 +175,7 @@ export class LoginTemp {
       password: ''
 
     });
+    this.logger.info('Login form reset');
 
   }
 

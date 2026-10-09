@@ -1,5 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, Signal, signal } from '@angular/core';
 import { FormControl,FormGroup,  FormsModule,  ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { UserService } from '../services/user-service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -8,6 +9,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatStepperModule } from '@angular/material/stepper';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { LoggerService } from '../services/logger.service';import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 
 
@@ -16,12 +19,12 @@ interface Role {
   viewValue: string;
 } 
 @Component({
-  imports: [ MatStepperModule, MatIconModule, MatFormFieldModule, MatSelectModule, FormsModule , ReactiveFormsModule, MatButtonModule,  MatInputModule ],
+  imports: [ MatStepperModule, MatIconModule, MatFormFieldModule, MatSelectModule, FormsModule , ReactiveFormsModule, MatButtonModule,  MatInputModule, CommonModule ],
   selector: 'app-signup',
   styleUrl: './signup.scss',
   templateUrl: './signup.html',
 })
-export class Signup {
+export class Signup implements OnDestroy {
 
 //dynamic errors
   messageList = {
@@ -36,10 +39,11 @@ export class Signup {
   "confirmPassword.required": "Please confirm your password"
 };
 
-  hidePassword = true; 
-  hideConfirmPassword = true;
-  isSubmitting = false;
-  successMessage = '';
+  hidePassword : boolean = true; 
+  hideConfirmPassword : boolean = true;
+  isSubmitting : boolean = false;
+  public successMessage = signal('');
+  public redirectCountdown = signal(3);
 
     roles: Role[] = [
   { value: 'SUPERUSER', viewValue: 'SUPER USER' },
@@ -48,7 +52,11 @@ export class Signup {
   { value: 'GUEST', viewValue: 'GUEST' }
 ];
 
-  private userService = inject(UserService);
+  private logger = inject(LoggerService);
+  constructor(
+  private userService: UserService,
+  private router: Router,
+) {}
 
   signUpForm = new FormGroup({
 
@@ -90,68 +98,76 @@ export class Signup {
     return btoa(binary);
   }
 
-
+  private userSignupSubscription : Subscription = new Subscription();
   //after user calls to create--->
-  createUser() {
-    //check if valid
-    if (this.signUpForm.invalid || this.isSubmitting) {
-      this.signUpForm.markAllAsTouched();
-      return;
-    }
+createUser() {
+  // Check if form is valid
+  if (this.signUpForm.invalid || this.isSubmitting) {
+    this.signUpForm.markAllAsTouched();
+    return;
+  }
 
-    this.isSubmitting = true;    
+  this.isSubmitting = true;
 
-
-  // get from data and transform the password
-    const formData = this.signUpForm.getRawValue();
+  // Get form data
+  const formData = this.signUpForm.getRawValue();
 
     if (!formData.password) {
-      console.error('Password is missing');
+      //console.error('Password is missing');
+      this.logger.error('Password is missing');
       this.isSubmitting = false;
       return;
     }
 
-    console.log('FORM DATA:', formData);
-    console.log('PASSWORD:', formData.password);
+    //console.log('FORM DATA:', formData);
+    this.logger.info('Signup form submitted');
+   // console.log('PASSWORD:', formData.password);
 
-    const encodedPassword = this.encodePassword(formData.password);
-    console.log('ENCODED PASSWORD:', encodedPassword);
-    formData.password = encodedPassword;
+  // Encode password
+  const encodedPassword = this.encodePassword(formData.password);
 
-    const request = this.userService.createUser(formData);
+  console.log('ENCODED PASSWORD:', encodedPassword);
 
-      request.subscribe({
-      //the Observable successfully produced a value.
-      next: 
-      //What should I do when data arrives?
-      (response) => {  console.log(response.status);
+  formData.password = encodedPassword;
 
-        if (response.status === 200) {
-          this.successMessage = 'User has been successfully created.';
-        }
-        this.isSubmitting = false;
 
-      },
 
-      //runs if the HTTP request fails
-      error: // What should I do if something goes wrong?
-      (error)  =>  {
-        console.error('Signup failed:', error);
-      this.isSubmitting = false;},
+  // Send request to backend
+  const request = this.userService.createUser(formData);
+  this.userSignupSubscription = request.subscribe({
 
-      complete: 
-        //What should I do when the Observable has finished producing values successfully.
-      () => {
-      this.isSubmitting = false;}
-    });
-  }
+    next: (response) => {
+          console.log('User created successfully:', response);
+          this.successMessage.set('User has been successfully created.');
+          console.log(this.successMessage);
+          this.isSubmitting = false;
+          this.redirectCountdown.set(3);
+          const countdown = setInterval(() => {
+            this.redirectCountdown.set(this.redirectCountdown()-1);
+            if (this.redirectCountdown() === 0) {
+              clearInterval(countdown);
 
+              this.router.navigate(['/login']);
+            }
+
+          }, 1000);
+        },
+
+    // Runs when HTTP request fails
+    error: (error) => {
+
+      console.error('Signup failed:', error);
+
+      this.isSubmitting = false;
+    }
+  });
+}
 
 resetForm(): void {
   this.signUpForm.reset();
 
   this.isSubmitting = false;
-  this.successMessage = '';
+  this.successMessage.set('');
 }
 get employeeId() {
   return this.signUpForm.controls.employeeId;
@@ -192,6 +208,11 @@ get password() {
 get confirmPassword() {
   return this.signUpForm.controls.confirmPassword;
 }
+
+
+ngOnDestroy(): void {
+    this.userSignupSubscription.unsubscribe();
+  }
 
 }
 

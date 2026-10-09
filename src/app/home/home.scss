@@ -1,49 +1,322 @@
-[cdkDropListGroup] {
-  display: flex;
-  gap: 20px;
+/* =========================================================
+   HOME / APPLICATION LAYOUT
+   ========================================================= */
 
-  margin-top: 80px;
-  
+:host {
+    display: block;
+
+    --page-background: #f7f7f9;
+    --sidebar-background: #f3f2f6;
+
+    --text-primary: #29292f;
+    --text-secondary: #696972;
+    --text-muted: #9b9ba5;
+
+    --border: #e8e8ed;
 }
 
 
-.board-column {
-  width: 300px;
-}
-.task-list {
-  min-height: 300px;
-  background: #f4f4f4;
-  padding: 12px;
-  border-radius: 8px;
-}
-.task-card {
-  background: white;
-  padding: 15px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  cursor: move;
-}
+/* =========================================================
+   SIDENAV CONTAINER
+   ========================================================= */
 
 .sidenav-container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #eee;
-  height: 100vh;
-  width: 100%;
-margin-top: 80px;
+    position: absolute;
 
-//   width: 180px;
+    // top: 80px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: calc(100vh - 62px);
+
+    background: var(--page-background);
 }
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
 
 .sidebar {
-    width: 180px;
+    width: 225px;
+
+    padding: 22px 12px 14px;
+
+    box-sizing: border-box;
+
+    background: var(--sidebar-background);
+
+    border-right: 1px solid rgba(0, 0, 0, 0.035);
+
+    box-shadow: none;
+
+    overflow: hidden;
 }
 
-.sidenav-link:hover{
-    transition: transform 0.2s ease;
+
+/* =========================================================
+   MENU
+   ========================================================= */
+
+.menu-section {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.section-label {
+    padding: 0 12px;
+
+    margin-bottom: 7px;
+
+    color: #58585e;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.05em;
+}
+
+
+/* =========================================================
+   SIDEBAR ITEMS
+   ========================================================= */
+
+.sidenav-link {
+    height: 42px !important;
+
+    min-height: 42px !important;
+
+    margin: 1px 0;
+
+    padding: 0 12px !important;
+
+    box-sizing: border-box;
+
+    border-radius: 12px;
+
+    color: var(--text-secondary);
+
     cursor: pointer;
+
+    transition:
+        background 160ms ease,
+        color 160ms ease,
+        transform 160ms ease;
+}
+
+
+/*
+    Your SVG icons
+*/
+
+.sidenav-link svg {
+    flex-shrink: 0;
+
+    width: 17px;
+    height: 17px;
+
+    color: #7f7f89;
+
+    transition:
+        color 160ms ease,
+        transform 160ms ease;
+}
+
+
+/*
+    Text inside the Material list item
+*/
+
+.sidenav-link [matListItemTitle] {
+    margin-left: 10px;
+
+    color: inherit;
+
+    font-size: 16px;
+
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   HOVER
+   ========================================================= */
+
+.sidenav-link:hover {
+    background: rgba(255, 255, 255, 0.62);
+
+    color: var(--text-primary);
+}
+
+
+.sidenav-link:hover svg {
+    color: #6661b8;
+
+    transform: scale(1.04);
+}
+
+
+/* =========================================================
+   ACTIVE ITEM
+   ========================================================= */
+
+.sidenav-link.active {
+    background: #ffffff;
+
+    color: #29292f;
+
+    box-shadow:
+        0 3px 12px rgba(35, 35, 45, 0.045);
+}
+
+
+.sidenav-link.active svg {
+    color: #625cb9;
+}
+
+
+/* =========================================================
+   LOWER SECTION
+   ========================================================= */
+
+.lower-section {
+    margin-top: 30px;
+}
+
+
+/* =========================================================
+   USER AREA
+   ========================================================= */
+
+.sidebar-user {
+    margin-top: 170%;
+
+    padding: 14px 8px 4px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    border-top: 1px solid rgba(0, 0, 0, 0.045);
+}
+
+
+.user-avatar {
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #dddaf3;
+
+    color: #5e5a91;
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+
+.user-details {
+    min-width: 0;
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+
+.user-name {
+    color: #29292e;
+
+    font-size: 15px;
+
+    font-weight: 650;
+}
+
+
+.user-role {
+    color: #9b9ba5;
+
+    font-size: 14px;
+}
+
+
+.user-more {
+    color: #9999a2;
+
+    font-size: 13px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   RIGHT SIDE
+   ========================================================= */
+
+.main-content {
+    background: var(--page-background);
+
+    color: var(--text-primary);
+
+    overflow: auto;
+}
+
+
+/* =========================================================
+   MATERIAL SIDENAV OVERRIDES
+   ========================================================= */
+
+::ng-deep .mat-drawer-inner-container {
+    overflow-x: hidden !important;
+}
+
+
+::ng-deep .mat-sidenav-content {
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .sidebar {
+        width: 200px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .sidebar {
+        width: 180px;
+    }
 
 }

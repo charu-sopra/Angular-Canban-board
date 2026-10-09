@@ -1,0 +1,67 @@
+.extra-details {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  width: 100%;
+  max-width: 650px;
+  margin: 50px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.profile-details,
+.system-details {
+  width: 100%;
+  padding: 32px;
+  box-sizing: border-box;
+
+  background: #ffffff;
+  border: 1px solid #e8e8ed;
+  border-radius: 16px;
+
+  box-shadow: 0 8px 25px rgba(35, 35, 45, 0.08);
+}
+
+/* Headings */
+
+.profile-details h2,
+.system-details h2 {
+  margin: 0 0 28px;
+
+  color: #29292f;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+/* Information rows */
+
+.profile-details p,
+.system-details p {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin: 0;
+  padding: 16px 4px;
+
+  color: #696972;
+  font-size: 16px;
+
+  border-bottom: 1px solid #eeeef2;
+}
+
+/* Remove border from last row */
+
+.profile-details p:last-child,
+.system-details p:last-child {
+  border-bottom: none;
+}
+
+/* Labels */
+
+.profile-details p strong,
+.system-details p strong {
+  color: #29292f;
+  font-weight: 600;
+}
