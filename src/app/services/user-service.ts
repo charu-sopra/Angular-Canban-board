@@ -22,5 +22,9 @@ export class UserService {
       'http://localhost:8080/profile'
     );
   }
+
+  getAllUsernames() {
+  return this.http.get<string[]>('http://localhost:8080/usernames');
+}
 }
 

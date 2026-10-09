@@ -27,7 +27,7 @@ export interface TicketResponse {
   createdAt: string;
   updatedBy: string | null;
   updatedAt: string | null;
-  assignedTo: string | null;
+  assignedTo: string ;
 }
 
 export interface TicketPageResponse {

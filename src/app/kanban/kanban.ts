@@ -1,97 +1,154 @@
+
 import {
   CdkDrag,
   CdkDropList,
   CdkDragDrop,
   moveItemInArray,
-  transferArrayItem,
-  
+  transferArrayItem
 } from '@angular/cdk/drag-drop';
+
 import { DatePipe } from '@angular/common';
-import { MatListModule } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
 
 import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
   inject,
-  OnInit,
-  
-  
+  OnInit
 } from '@angular/core';
 
-import { TicketService } from '../services/ticket.service';
-import { TicketResponse } from '../model/ticket.model';
-
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import {
+  MatButtonToggleChange,
+  MatButtonToggleModule
+} from '@angular/material/button-toggle';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateTicketDialogComponent } from '../create-ticket-dialog/create-ticket-dialog';
 import { MatButtonModule } from '@angular/material/button';
 
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
+import { TicketService } from '../services/ticket.service';
+import { TicketResponse } from '../model/ticket.model';
+import { CreateTicketDialogComponent } from '../create-ticket-dialog/create-ticket-dialog';
+
 @Component({
-  imports: [ DatePipe, MatButtonToggleModule,MatSidenavModule,MatListModule,CdkDrag, CdkDropList, MatButtonModule],
+  imports: [
+    DatePipe,
+    MatButtonToggleModule,
+    MatSidenavModule,
+    MatListModule,
+    CdkDrag,
+    CdkDropList,
+    MatButtonModule
+  ],
   selector: 'app-kanban',
   styleUrl: './kanban.scss',
-  templateUrl: './kanban.html',
+  templateUrl: './kanban.html'
 })
-
 export class Kanban implements OnInit {
 
-  // material dialog
+  // Controls which ticket view is displayed
+  showMyTickets = false;
+
+  // Material dialog
   readonly dialog = inject(MatDialog);
 
-  // ticket columns
+  // Kanban columns
   todo: TicketResponse[] = [];
   inProgress: TicketResponse[] = [];
   finished: TicketResponse[] = [];
 
-  // all tickets received from backend
+  // All tickets fetched from the backend
   private allTickets: TicketResponse[] = [];
 
-  // search results currently being displayed
+  // Current search results; null means no active search filter
   private activeSearchResults: TicketResponse[] | null = null;
 
-  // Used to automatically clean up subscriptions
+  // Automatically clean up subscriptions on component destruction
   private destroyRef = inject(DestroyRef);
-
 
   constructor(
     private ticketService: TicketService,
     private changeDetector: ChangeDetectorRef
   ) {}
 
+  ngOnInit(): void {
 
-  ngOnInit() {
-
-    // Listen for search results
+    // Listen for search changes
     this.ticketService.searchResults$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((results) => {
 
         this.activeSearchResults = results;
 
-        this.setTickets(results ?? this.allTickets);
-
+        // Do not let search results overwrite the My Tickets view
+        if (!this.showMyTickets) {
+          this.setTickets(results ?? this.allTickets);
+        }
       });
 
-
-    // Load tickets when Kanban first opens
-    this.ticketService.getTickets().subscribe((response) => {
-
-      this.allTickets = response.content;
-
-      if (this.activeSearchResults === null) {
-
-        this.setTickets(this.allTickets);
-
-      }
-
-    });
-
+    // Load all tickets when the Kanban first opens
+    this.loadAllTickets();
   }
 
+  // Handle the All Tickets / My Tickets toggle
+  myTicketsToggle(event: MatButtonToggleChange): void {
+
+    this.showMyTickets = event.value === 'myTickets';
+
+    if (this.showMyTickets) {
+      this.loadMyTickets();
+    } else {
+      this.setTickets(
+        this.activeSearchResults ?? this.allTickets
+      );
+    }
+  }
+
+  // Fetch tickets belonging to the logged-in user
+  loadMyTickets(): void {
+
+    this.ticketService.getMyTickets()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (response) => {
+
+          // Ignore an old response if the user has switched views
+          if (!this.showMyTickets) {
+            return;
+          }
+
+          this.setTickets(response.content);
+        },
+        error: (error) => {
+          console.error('Failed to fetch my tickets:', error);
+        }
+      });
+  }
+
+  // Fetch all tickets
+  loadAllTickets(): void {
+
+    this.ticketService.getTickets()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (response) => {
+
+          this.allTickets = response.content;
+
+          // Do not replace My Tickets if its toggle is on
+          if (!this.showMyTickets) {
+            this.setTickets(
+              this.activeSearchResults ?? this.allTickets
+            );
+          }
+        },
+        error: (error) => {
+          console.error('Failed to fetch all tickets:', error);
+        }
+      });
+  }
 
   // Put tickets into the correct Kanban column
   private setTickets(tickets: TicketResponse[]): void {
@@ -113,57 +170,40 @@ export class Kanban implements OnInit {
     this.changeDetector.markForCheck();
   }
 
+  // Open the Create/Edit Ticket dialog
+  openTicketDialog(ticket?: TicketResponse): void {
 
-  // Add one newly created ticket to the correct column
-  addTicketToBoard(ticket: TicketResponse) {
-
-    if (ticket.ticketStatus === 'OPEN') {
-
-      this.todo.push(ticket);
-
-    }
-    else if (ticket.ticketStatus === 'IN_PROGRESS') {
-
-      this.inProgress.push(ticket);
-
-    }
-    else if (
-      ticket.ticketStatus === 'RESOLVED' ||
-      ticket.ticketStatus === 'CLOSED'
-    ) {
-
-      this.finished.push(ticket);
-
-    }
-
-  }
-
-
-  // Open Create/Edit Ticket dialog
-  openTicketDialog(ticket? : TicketResponse) {
-
-    const dialogRef = this.dialog.open(CreateTicketDialogComponent,
+    const dialogRef = this.dialog.open(
+      CreateTicketDialogComponent,
       {
         width: '650px',
         maxWidth: '90vw',
-        data:ticket
+        data: ticket
       }
     );
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('Ticket received by Kanban:',result);
-        this.addTicketToBoard(result);
 
-      }
+    dialogRef.afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((result) => {
 
-    });
+        if (result) {
+          console.log('Ticket saved:', result);
 
+          // Reload the current view so edits and creations
+          // are reflected without manually adding duplicates.
+          if (this.showMyTickets) {
+            this.loadMyTickets();
+          } else {
+            this.loadAllTickets();
+          }
+        }
+      });
   }
 
+  // Handle Kanban drag and drop
+  drop(event: CdkDragDrop<TicketResponse[]>): void {
 
-  // Handle drag and drop
-  drop(event: CdkDragDrop<any[]>) {
-
+    // Reordering inside the same column
     if (event.previousContainer === event.container) {
 
       moveItemInArray(
@@ -172,81 +212,64 @@ export class Kanban implements OnInit {
         event.currentIndex
       );
 
-    }
-    else {
-
-      // Move ticket between Kanban columns
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-
-
-      const ticket =
-        event.container.data[event.currentIndex];
-
-
-      let newStatus: string;
-
-
-      if (event.container.data === this.todo) {
-
-        newStatus = 'OPEN';
-
-      }
-      else if (event.container.data === this.inProgress) {
-
-        newStatus = 'IN_PROGRESS';
-
-      }
-      else {
-
-        newStatus = 'RESOLVED';
-
-      }
-
-
-      // Update Angular's local ticket state
-      ticket.ticketStatus = newStatus;
-
-
-      // Update ticket in backend
-      this.ticketService.updateTicket(
-        ticket.id,
-        {
-          title: ticket.title,
-          description: ticket.description,
-          ticketPriority: ticket.ticketPriority,
-          ticketStatus: newStatus,
-          assignedTo: ticket.assignedTo
-        }
-      )
-      .subscribe({
-
-        next: (response) => {
-
-          console.log(
-            'Ticket status updated successfully:',
-            response
-          );
-
-        },
-
-        error: (error) => {
-
-          console.error(
-            'Failed to update ticket status:',
-            error
-          );
-
-        }
-
-      });
-
+      return;
     }
 
+    // Move ticket between columns
+    transferArrayItem(
+      event.previousContainer.data,
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex
+    );
+
+    const ticket = event.container.data[event.currentIndex];
+
+    // Determine the destination column's status
+    const newStatus: TicketResponse['ticketStatus'] =
+      event.container.data === this.todo
+        ? 'OPEN'
+        : event.container.data === this.inProgress
+          ? 'IN_PROGRESS'
+          : 'RESOLVED';
+
+    // Save the previous status in case the API call fails
+    const previousStatus = ticket.ticketStatus;
+
+    ticket.ticketStatus = newStatus;
+
+    // Persist the status change in the backend
+    this.ticketService.updateTicket(
+      ticket.id,
+      {
+        title: ticket.title,
+        description: ticket.description,
+        ticketPriority: ticket.ticketPriority,
+        ticketStatus: newStatus,
+        assignedTo: ticket.assignedTo
+      }
+    )
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe({
+
+      next: (response) => {
+        console.log('Ticket status updated successfully:', response);
+      },
+
+      error: (error) => {
+
+        console.error('Failed to update ticket status:', error);
+
+        // Restore the ticket's previous status
+        ticket.ticketStatus = previousStatus;
+
+        // Reload the current view to restore the correct column placement
+        if (this.showMyTickets) {
+          this.loadMyTickets();
+        } else {
+          this.loadAllTickets();
+        }
+      }
+    });
   }
-
 }

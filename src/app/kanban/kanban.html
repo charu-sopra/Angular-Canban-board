@@ -5,14 +5,12 @@
     <div class="filters-search">
 
         <div class="toggles">
-
             <mat-button-toggle-group
-                name="ticketFilter"
-                aria-label="Ticket Filter"
-                class="ticket-toggle">
+                [value]="showMyTickets ? 'myTickets' : 'allTickets'"
+                (change)="myTicketsToggle($event)">
 
-                <mat-button-toggle value="all">
-                    All
+                <mat-button-toggle value="allTickets">
+                    All Tickets
                 </mat-button-toggle>
 
                 <mat-button-toggle value="myTickets">
@@ -20,6 +18,7 @@
                 </mat-button-toggle>
 
             </mat-button-toggle-group>
+            
 
         </div>
 

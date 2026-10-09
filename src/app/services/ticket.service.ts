@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Service } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { TicketPageResponse, TicketRequest, TicketResponse } from '../model/ticket.model';
 
-@Service()
+@Injectable({
+  providedIn: 'root'
+})
 export class TicketService {
     private http = inject(HttpClient);
     apiUrl = "http://localhost:8080/tickets";
@@ -15,12 +17,19 @@ export class TicketService {
     }
 
     // Create
-  createTicket(ticket: TicketRequest) {
+  public submitTicket(ticket: TicketRequest) {
     return this.http.post(this.apiUrl,ticket);
   }
 
+  public getMyTickets(page: number = 0, size: number = 10) {
+  return this.http.get<any>(
+    `http://localhost:8080/tickets/my-tickets?page=${page}&size=${size}`
+  );
+}
+
   // Get all
-  getTickets() {  return this.http.get<TicketPageResponse>(this.apiUrl);
+  public getTickets() {  
+    return this.http.get<TicketPageResponse>(this.apiUrl);
   }
 
   // Search tickets
@@ -32,11 +41,7 @@ searchTickets(
   return this.http.get<TicketPageResponse>(
     `${this.apiUrl}/search`,
     {
-      params: {
-        query,
-        page,
-        size
-      }
+      params: { query, page, size}
     }
   );
 }

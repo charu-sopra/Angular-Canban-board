@@ -1,17 +1,30 @@
-import { CdkDrag, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
-import { Component } from '@angular/core';
-import { MatListModule } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
+import { Component, inject, OnInit } from '@angular/core';
+import { UserSessionService } from '../services/user.session.service';
 
 @Component({
   selector: 'app-dashboard',
-
-  imports: [MatCardModule  ],
+  standalone: true,
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })
-export class Dashboard {
-    
+export class Dashboard implements OnInit {
+
+  private userSessionService = inject(UserSessionService);
+
+  activeUserCount = 0;
+
+  ngOnInit(): void {
+    this.loadActiveUserCount();
+  }
+
+  loadActiveUserCount(): void {
+    this.userSessionService.getActiveUserCount().subscribe({
+      next: (count) => {
+        this.activeUserCount = count;
+      },
+      error: (error) => {
+        console.error('Failed to load active user count', error);
+      }
+    });
+  }
 }
