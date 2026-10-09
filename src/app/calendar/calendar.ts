@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ScheduleModule, DayService, WeekService, WorkWeekService,MonthService,AgendaService} from '@syncfusion/ej2-angular-schedule';@Component({
+import { ScheduleModule, DayService, WeekService, WorkWeekService, MonthService, AgendaService} from '@syncfusion/ej2-angular-schedule';
+@Component({
   
   imports: [ScheduleModule],
   standalone: true,

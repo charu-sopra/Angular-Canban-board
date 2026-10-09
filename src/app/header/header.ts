@@ -27,6 +27,8 @@ export class Header {
   hasSubmittedSearch = false;
   isAuthPage = false;
   isAuthenticated = false;
+  isloginPage = false;
+  isSignupPage = false;
   private searchRequestId = 0;
   private destroyRef = inject(DestroyRef);
 
@@ -51,7 +53,9 @@ export class Header {
 
   private updateAuthPage(url: string): void {
     const path = url.split(/[?#]/, 1)[0];
-    this.isAuthPage = path === '/login' || path === '/signup';
+    this.isAuthPage = path === '/' || path === '/login' || path === '/signup';
+    this.isloginPage = path === '/login';
+    this.isSignupPage = path === '/signup';
     this.isAuthenticated = this.authService.isAuthenticated();
 
 

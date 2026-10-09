@@ -1,0 +1,107 @@
+<main class="landing">
+  <section class="hero" aria-labelledby="landing-title">
+    <div class="hero__copy">
+
+      <h1 id="landing-title">
+        <span>Ticket Service</span>
+      </h1>
+
+      <p class="hero__description">
+        Create, organize, and track support requests in one shared workspace.
+        Give your team a clear view of what needs attention and what is already moving.
+      </p>
+
+      <div class="hero__actions">
+        <a class="button button--primary" routerLink="/signup">
+          Get started
+          <mat-icon aria-hidden="true">arrow_forward</mat-icon>
+        </a>
+        <a class="button button--secondary" routerLink="/login">
+          Log in
+        </a>
+      </div>
+
+      <div class="hero__note">
+        <mat-icon aria-hidden="true">verified_user</mat-icon>
+        <span>Built for teams that value clarity and collaboration</span>
+      </div>
+    </div>
+
+    <div class="board-wrap" aria-label="Preview of a ticket board">
+      <div class="board-orbit board-orbit--one"></div>
+      <div class="board-orbit board-orbit--two"></div>
+
+      <article class="board">
+        <div class="board__top">
+          <div>
+            <span class="board__overline">TEAM WORKSPACE</span>
+          </div>
+        </div>
+        <div class="board__columns">
+          <section class="ticket-column">
+            <h3><span class="column-dot column-dot--new"></span>To do <span>3</span></h3>
+            <article class="ticket-card">
+              <span class="ticket-card__tag ticket-card__tag--violet">ACCESS</span>
+              <h4>Update team permissions</h4>
+              <div class="ticket-card__footer"><span>TK-1042</span> 06 oct 2026, 01:05 AM</div>
+            </article>
+            <article class="ticket-card ticket-card--muted">
+              <span class="ticket-card__tag ticket-card__tag--orange">REQUEST</span>
+              <h4>Set up a new project space</h4>
+              <div class="ticket-card__footer"><span>TK-1048</span>07 oct 2026, 12:05 PM</div>
+            </article>
+          </section>
+
+          <section class="ticket-column">
+            <h3><span class="column-dot column-dot--progress"></span>In progress <span>2</span></h3>
+            <article class="ticket-card ticket-card--active">
+              <span class="ticket-card__tag ticket-card__tag--pink">BUG</span>
+              <h4>Resolve dashboard loading issue</h4>
+              <div class="ticket-card__footer"><span>TK-1037</span>08 oct 2026, 02:05 AM</div>
+            </article>
+            <div class="board__hint">
+              <mat-icon aria-hidden="true">drag_indicator</mat-icon>
+              Move work as it progresses
+            </div>
+          </section>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- <section class="features" aria-label="What you can do">
+    <article class="feature">
+      <span class="feature__icon feature__icon--purple"><mat-icon aria-hidden="true">add_task</mat-icon></span>
+      <div>
+        <h2>Keep requests organized</h2>
+        <p>Create tickets with the details your team needs, all in one place.</p>
+      </div>
+    </article>
+    <article class="feature">
+      <span class="feature__icon feature__icon--pink"><mat-icon aria-hidden="true">view_kanban</mat-icon></span>
+      <div>
+        <h2>See work move forward</h2>
+        <p>Track each ticket from the first request through to resolution.</p>
+      </div>
+    </article>
+    <article class="feature">
+      <span class="feature__icon feature__icon--orange"><mat-icon aria-hidden="true">groups</mat-icon></span>
+      <div>
+        <h2>Work better together</h2>
+        <p>Share progress and keep everyone aligned on what matters next.</p>
+      </div>
+    </article>
+  </section> -->
+
+  <!-- <section class="closing">
+    <div>
+      <span class="closing__eyebrow">Ready when your team is</span>
+      <h2>Make the next ticket easier to manage.</h2>
+    </div>
+    <a class="button button--light" routerLink="/signup">
+      Create your account
+      <mat-icon aria-hidden="true">arrow_forward</mat-icon>
+    </a>
+  </section> -->
+</main>

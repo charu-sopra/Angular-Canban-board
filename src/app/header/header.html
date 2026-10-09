@@ -2,7 +2,7 @@
   <div class="header__secondary-menu"></div>
 
   <div class="header__primary-menu">
-    <a routerLink="/home"
+    <a [routerLink]="isAuthenticated ? '/home' : '/'"
       class="primary-menu__logo"
       aria-label="Sopra Steria - Return to home page">
       <img src="SOPRASTERIA_logo_RVB_exe.png" alt="Sopra Steria">
