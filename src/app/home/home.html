@@ -88,12 +88,13 @@
 
         
 
-        <!-- CALENDAR -->
-         <mat-list-item
+            <!-- CALENDAR -->
+            @if (isAuthenticated) {
+                <mat-list-item
                 routerLink="/home/calendar"
                 routerLinkActive="active"
                 class="sidenav-link"
-            >
+                >
 
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -110,9 +111,12 @@
                     Calendar
                 </span>
 
-            </mat-list-item>
-
-            </div>
+                </mat-list-item>
+            }
+            @if (!isAuthenticated) {
+                <a matButton routerLink="/login" class="primary-menu__login">Log In</a>
+            }
+        </div>
 
 
 

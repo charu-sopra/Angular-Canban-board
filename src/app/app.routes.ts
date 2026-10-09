@@ -6,6 +6,7 @@ import { Dashboard } from './dashboard/dashboard';
 import { Kanban } from './kanban/kanban';
 import { Calendar } from './calendar/calendar';
 import { Profile } from './profile/profile';
+import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
     {
@@ -26,7 +27,9 @@ export const routes: Routes = [
             path: 'calendar',
             component: Calendar
         }
-    ]
+    ],
+    canActivate: [authGuard]
+
     },
     
     {
@@ -44,7 +47,8 @@ export const routes: Routes = [
     },
     {
         path: 'profile',
-        component: Profile
+        component: Profile,
+        canActivate: [authGuard]
     }
    
 ];

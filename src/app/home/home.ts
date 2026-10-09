@@ -7,6 +7,7 @@ import { CreateTicketDialogComponent } from '../create-ticket-dialog/create-tick
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { UserService } from '../services/user-service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   imports: [RouterLink, RouterOutlet, MatSidenavModule , MatListModule, MatIconModule,MatCardModule],
@@ -19,11 +20,15 @@ import { UserService } from '../services/user-service';
 export class Home {
 
 activeUserRole: string = '';
+isAuthenticated = false;
 
   constructor(
-  private userService: UserService
+  private userService: UserService,
+  authService: AuthService
   ) {
     this.activeUserRole = this.userService.userRole;
+    this.isAuthenticated = authService.isAuthenticated();
+    
   }
 
 }
